@@ -4,4 +4,3 @@ web/WEB-INF/classes/
 *.log
 Thumbs.db
 target/
-WebRoot/WEB-INF/lib
