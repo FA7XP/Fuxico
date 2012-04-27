@@ -1,0 +1,7 @@
+web/WEB-INF/classes/
+*.class
+*.bak
+*.log
+Thumbs.db
+target/
+WebRoot/WEB-INF/lib

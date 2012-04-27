@@ -1,0 +1,23 @@
+label.error { float: none; color: red; padding-left: 3px;  }
+
+#contaGeral { width: 100%; height: 100%; }
+
+#conta { height: 200px; width: 100%; margin: 14% 0 0; }
+.clearfix > label { color: #fff; font-size: 13pt !important; }
+
+#conta {
+    position: absolute; 
+    left: 58px;
+    right: 0;
+    height: 211px;
+}
+
+.nome {
+	width: 500px !important;
+}
+
+.email {
+	width: 300px !important;
+}
+
+#erro { margin: -10px 0 5px 60px; height: 25px; color: white; }
