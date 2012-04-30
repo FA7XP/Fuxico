@@ -35,7 +35,6 @@ public class ContaControllerTest {
 		usuario.setNome("victor a");
 		usuario.setLogin("victor");
 		usuario.setSenha("123456");
-		usuarioDaoMock.save(usuario);
 
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 
@@ -50,7 +49,6 @@ public class ContaControllerTest {
 		usuario.setNome("victor a");
 		usuario.setLogin("victor");
 		usuario.setSenha("123456");
-		usuarioDaoMock.save(usuario);
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(true);
 		contaController.gravarConta(usuario);
@@ -68,7 +66,6 @@ public class ContaControllerTest {
 		usuario.setNome("victor A");
 		usuario.setLogin("victor");
 		usuario.setSenha("victor");
-		usuarioDaoMock.save(usuario);
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 		contaController.gravarConta(usuario);
@@ -86,7 +83,6 @@ public class ContaControllerTest {
 		usuario.setNome("victor a");
 		usuario.setLogin("victor");
 		usuario.setSenha("123");
-		usuarioDaoMock.save(usuario);
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 		

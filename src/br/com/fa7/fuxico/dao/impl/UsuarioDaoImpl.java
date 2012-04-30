@@ -20,12 +20,15 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Usuario> list() {
-		return criteriosDeBuscaDeUsuario().list();
+		Criteria criteria = getSession().createCriteria(Usuario.class, "u");
+		criteria.addOrder(Order.asc("u.nome"));
+
+		return criteria.list();
 	}
 
 	public boolean isLoginExiste( String login ) {
 		Criteria criteria = getSession().createCriteria(Usuario.class, "user");
-		
+
 		criteria.add(Restrictions.eq("user.login", login.toLowerCase()));
 
 		ProjectionList list = Projections.projectionList().create();
@@ -37,9 +40,21 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 
 	public Usuario login( String login, String senha ) {
 		try {
-			Criteria criteria = getSession().createCriteria(Usuario.class, "user");
-			criteria.add(Restrictions.eq("user.login", login));
-			criteria.add(Restrictions.eq("user.senha", senha));
+			Criteria criteria = getSession().createCriteria(Usuario.class, "u");
+
+			ProjectionList p = Projections.projectionList().create();
+			p.add(Projections.property("u.id"), "id");
+			p.add(Projections.property("u.nome"), "nome");
+			p.add(Projections.property("u.login"), "login");
+			p.add(Projections.property("u.email"), "email");
+
+			criteria.setProjection(p);
+			criteria.add(Restrictions.eq("u.login", login));
+			criteria.add(Restrictions.eq("c.senha", senha));
+
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.setResultTransformer(new AliasToBeanResultTransformer(Usuario.class));
+
 			return (Usuario) criteria.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,10 +62,4 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 		}
 	}
 
-	private Criteria criteriosDeBuscaDeUsuario() {
-		Criteria criteria = getSession().createCriteria(Usuario.class, "u");
-		criteria.addOrder(Order.asc("u.nome"));
-
-		return (Criteria) criteria.list(); 
-	}
 }

@@ -28,7 +28,6 @@ public class FuxicarControllerTest{
 		this.fuxicarController = new FuxicarController(resultMock, fuxicoDaoMock);
 	}
 
-
 	@Test
 	public void naoDevePermitirEnviarMsgVazia() {
 		iniciaUsuario();

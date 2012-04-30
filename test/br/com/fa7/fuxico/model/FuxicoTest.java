@@ -37,5 +37,4 @@ public class FuxicoTest {
 		fuxico.setFuxico("mensagem do fuxico");
 		return fuxico;
 	}
-
 }

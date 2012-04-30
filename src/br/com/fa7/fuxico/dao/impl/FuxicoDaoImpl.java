@@ -14,18 +14,13 @@ public class FuxicoDaoImpl extends GenericDaoImpl implements FuxicoDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Fuxico> list() {
-		Criteria criteria = criteriosDeBuscaDeFuxico();
+		Criteria criteria = getSession().createCriteria(Fuxico.class, "f");
+		criteria.createCriteria("f.usuario", "u");
+		
+		criteria.createCriteria("f.usuario", "usuario");
+		criteria.createCriteria("f.data", "data");
+		criteria.createCriteria("f.fuxico", "fuxico");
 		
 		return criteria.list();
-	}
-
-	private Criteria criteriosDeBuscaDeFuxico() {
-		Criteria criteria = getSession().createCriteria(Fuxico.class, "fuxico");
-		
-		criteria.createCriteria("fuxico.usuario", "usuario");
-		criteria.createCriteria("fuxico.data", "data");
-		criteria.createCriteria("fuxico.fuxico", "fuxico");
-
-		return criteria;			
 	}
 }
