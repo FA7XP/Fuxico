@@ -1,7 +1,7 @@
 package br.com.fa7.fuxico.controller;
 
+import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
