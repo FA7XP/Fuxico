@@ -4,9 +4,7 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.Validator;
 import br.com.fa7.fuxico.dao.UsuarioDao;
-import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 @Resource
@@ -14,13 +12,10 @@ public class ContaController {
 
 	private Result result;
 	private UsuarioDao usuarioDao;
-	private UsuarioSession usuarioSession;
-	private Validator validator;
 
-	public ContaController(Result result, UsuarioDao usuarioDao, UsuarioSession usuarioSession) {
+	public ContaController(Result result, UsuarioDao usuarioDao) {
 		this.result = result;
 		this.usuarioDao = usuarioDao;
-		this.usuarioSession = usuarioSession;
 	}
 
 	@Get("/conta")
@@ -29,35 +24,24 @@ public class ContaController {
 
 	@Post("/conta")
 	public void gravarConta(Usuario usuario) throws Exception {
-		if (existeLoginDisponivel(usuario.getLogin())) 
-		{
-			result.include("erro", "Login j� existente. Favor inserir um novo login.").redirectTo(ContaController.class).conta();
-		}
-		else
-		{
-			usuarioDao.save(usuario);
-			result.redirectTo(LoginController.class).login();
-		}
+		if (usuarioDao.isLoginExiste(usuario.getLogin()))
+			result.include("erro", "Login já existente. Favor inserir um novo login.").redirectTo(ContaController.class).conta();
+
+		if (verificarSenhaNome(usuario.getLogin(), usuario.getSenha()))
+			result.include("erro", "A Senha não pode ser igual ao login.").redirectTo(ContaController.class).conta();
+
+		if (verificarTamanhoMinSenha(usuario.getSenha()))
+			result.include("erro", "A Senha não pode ser inferior a 6 caracteres.").redirectTo(ContaController.class).conta();
+
+		usuarioDao.save(usuario);
+		result.redirectTo(LoginController.class).login();
 	}
 
-	public boolean verificarSenhaNome(String senha, String nome) {
+	public boolean verificarSenhaNome(String nome, String senha) {
 		return senha.equalsIgnoreCase(nome);
 	}
 
 	public boolean verificarTamanhoMinSenha(String senha) {
-		if (senha.length() >= 6) {
-			return true;
-		}
-		return false;
+		return senha.length() < 6;
 	}
-
-	public boolean existeLoginDisponivel(String login) {
-		if (usuarioDao.consultarUsuarioPorLogin(login) != null) {
-			// throw new RuntimeException("Login já cadastrado.");
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 }

@@ -45,13 +45,6 @@ public class Fuxico {
 		this.fuxico = fuxico;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Date getData() {
 		return data;
@@ -59,5 +52,13 @@ public class Fuxico {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }

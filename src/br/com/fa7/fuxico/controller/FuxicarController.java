@@ -1,67 +1,45 @@
 package br.com.fa7.fuxico.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.fa7.fuxico.dao.FuxicoDao;
-import br.com.fa7.fuxico.dao.UsuarioSession;
+import br.com.fa7.fuxico.model.Fuxico;
+import br.com.fa7.fuxico.model.Usuario;
 
 public class FuxicarController {
 
-	Map<String, List<String>> timeline;
-	//UsuarioDao usuarioDao;
-	
-
 	private Result result;
 	private FuxicoDao fuxicoDao;
-	private UsuarioSession usuarioSession;
 
-	public FuxicarController( Result result, FuxicoDao fuxicoDao, UsuarioSession usuarioSession ) {
+	public FuxicarController( Result result, FuxicoDao fuxicoDao) {
 		this.result = result;
 		this.fuxicoDao = fuxicoDao;
-		this.usuarioSession = usuarioSession;
 	}
 	
-	@Get("/fuxicar")
-	public void fuxicar() 
-	{
+	@Get("/fuxicos")
+	public void fuxicar(){
 		result.include("fuxicos", fuxicoDao.list());
 	}
 
 	@Get("/atualizaFuxico")
-	public void atualizaFuxico() 
-	{
+	public void atualizaFuxico(){
 //		result.use(json()).from( fuxicoDao.list(), "fuxicos").serialize();
 	}
 	
 	@Post("/fuxicar")
-	public void fuxicar(String mensagem, String usuario) throws Exception 
-	{
-		timeline = new HashMap<String, List<String>>();
-
+	public void fuxicar(String mensagem, Usuario usuario){
 		if (mensagem == null || mensagem.isEmpty()) {
-			throw new Exception("Digite uma mensagem!");
+			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			throw new Exception("Digite uma mensagem com até 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com atÃ© 255 caracteres!");
 		} else {
-			List<String> msgs = new ArrayList<String>();
-			msgs.add(mensagem);
-			timeline.put(usuario, msgs);
+			Fuxico fuxico = new Fuxico();
+			fuxico.setFuxico(mensagem);
+			fuxico.setUsuario(usuario);
+			fuxicoDao.save(fuxico);
+			
+			result.redirectTo(FuxicarController.class).fuxicar();
 		}
-		result.redirectTo(FuxicarController.class).fuxicar();
 	}
-
-	public List<String> obterMensagens(String usuario) {
-		return timeline.get(usuario);
-	}
-
-	public Map<String, List<String>> getTimeline() {
-		return timeline;
-	}
-
 }

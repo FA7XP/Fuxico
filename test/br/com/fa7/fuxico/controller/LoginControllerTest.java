@@ -1,95 +1,72 @@
 package br.com.fa7.fuxico.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.easymock.EasyMock;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.UsuarioDao;
-import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 public class LoginControllerTest {
-	
-	//Classe em teste
-	LoginController loginController;
-	//Mock necessarios
-	UsuarioSession usuarioSessionMock;
-	UsuarioDao usuarioDaoMock;
-	Usuario usuarioMock;
-	Result resultMock;
-	
+
+	@Mock 
+	private UsuarioDao usuarioDaoMock;
+
+	private Result resultMock;
+	private LoginController loginController;
+
 	@Before
-	public void setUp()	{
-		usuarioSessionMock = EasyMock.createMock(UsuarioSession.class);
-		usuarioDaoMock = EasyMock.createMock(UsuarioDao.class);
-		resultMock = EasyMock.createMock(Result.class);
-		loginController = new LoginController(resultMock, usuarioDaoMock, usuarioSessionMock);
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+		this.resultMock = new MockResult();
+		this.loginController = new LoginController(resultMock, usuarioDaoMock);
 	}
 
 	@Test
-	public void testGetLogin() {
-		//Duvida1: new Usuario()
-		EasyMock.expect(usuarioSessionMock.getUsuario()).andReturn(new Usuario());
-		EasyMock.expect(resultMock.redirectTo(IndexController.class))
-			.andReturn(EasyMock.createMock(IndexController.class));
-		EasyMock.replay(usuarioSessionMock);
-		EasyMock.replay(resultMock);
+	public void testGetLogin() throws Exception {
 		try {
 			loginController.login();
 		} catch (Exception e) {
-			fail("Quebrou");
+			fail("Teste getLogin quebrou.");
 		}
 	}
 
 	@Test
-	public void testGetLoginException()	{
-		try {
-			loginController.login();
-		} catch (Exception e) {
-			assertEquals("n�o deu certo", e.getMessage());
-		}
-	}
-	
-	@Test
-	public void testPostLoginValido() {
-		String nome = "victor";
-		String senha = "victor123";
-		//Duvida1: EasyMock.createMock(Usuario.class)
-		EasyMock.expect(usuarioDaoMock.login(nome, senha)).andReturn(EasyMock.createMock(Usuario.class));
-		
-		//Problemas para incluir metodo void neste teste!
-		
-		EasyMock.expect(resultMock.redirectTo(IndexController.class))
-			.andReturn(EasyMock.createMock(IndexController.class));
-		EasyMock.replay(usuarioDaoMock);
-		EasyMock.replay(resultMock);
-		try {
-			loginController.login(nome, senha);
-		} catch (Exception e) {
-			fail("Falhou teste de PostLogin v�lido");
-		}
-	}
-	
-	@Test
-	public void testPostLoginInvalido() { //Ainda quebrando (Victor ..... verificando)
+	public void testPostLoginValido() throws Exception {
 		String nome = "victor";
 		String senha = "victor123";
 
-		EasyMock.expect(usuarioDaoMock.login(nome, senha)).andReturn(EasyMock.createMock(Usuario.class));
-		EasyMock.replay(usuarioDaoMock);
-		
-		EasyMock.expect(resultMock.redirectTo(IndexController.class)).andReturn(EasyMock.createMock(IndexController.class));
-		EasyMock.replay(resultMock);
+		Usuario usuario = new Usuario();
+		usuario.setNome(nome);
+		usuario.setSenha(senha);
 
-		try {
-			loginController.login(nome, senha);
-		} catch (Exception e) {
-			fail("Falhou teste de PostLogin invalido");
-		}
+		when(usuarioDaoMock.login(nome, senha)).thenReturn(usuario);
+
+		loginController.login(nome, senha);
+		assertEquals(0, resultMock.included().size());
 	}
-	
+
+	@Test
+	public void testPostLoginInvalido() throws Exception { 
+		String nome = "victor";
+		String senha = "victor123";
+
+		Usuario usuario = new Usuario();
+		usuario.setNome(nome);
+		usuario.setSenha(senha);
+
+		when(usuarioDaoMock.login(nome, senha)).thenReturn(null);
+
+		loginController.login(nome, senha);
+		
+		String msgRetorno = (String) resultMock.included().get("erro");
+
+		assertEquals(1, resultMock.included().size());
+		assertEquals("Login ou senha inválidos.", msgRetorno);
+	}
 }
