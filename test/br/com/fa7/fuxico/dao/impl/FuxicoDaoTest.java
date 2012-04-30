@@ -49,6 +49,6 @@ public class FuxicoDaoTest {
 		
 		when(fuxicoDao.list()).thenReturn(Arrays.asList(fuxico1, fuxico2));
 
-		assertEquals(1, fuxicoDao.list().size());
+		assertEquals(2, fuxicoDao.list().size());
 	}
 }

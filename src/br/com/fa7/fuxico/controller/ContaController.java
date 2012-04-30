@@ -34,7 +34,7 @@ public class ContaController {
 			result.include("erro", "A Senha não pode ser inferior a 6 caracteres.").redirectTo(ContaController.class).conta();
 
 		usuarioDao.save(usuario);
-		result.redirectTo(LoginController.class).login();
+//		result.redirectTo(LoginController.class).login();
 	}
 
 	public boolean verificarSenhaNome(String nome, String senha) {

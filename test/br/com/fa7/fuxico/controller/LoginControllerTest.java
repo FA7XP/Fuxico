@@ -1,7 +1,8 @@
 package br.com.fa7.fuxico.controller;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,7 +17,6 @@ public class LoginControllerTest {
 
 	@Mock 
 	private UsuarioDao usuarioDaoMock;
-
 	private Result resultMock;
 	private LoginController loginController;
 
@@ -50,7 +50,7 @@ public class LoginControllerTest {
 		loginController.login(nome, senha);
 		assertEquals(0, resultMock.included().size());
 	}
-
+	
 	@Test
 	public void testPostLoginInvalido() throws Exception { 
 		String nome = "victor";

@@ -20,7 +20,7 @@ public class LoginController {
 
 	@Get("/login")
 	public void login() throws Exception {
-		result.redirectTo(IndexControllerTest.class).index();
+		result.redirectTo(IndexController.class).index();
 	}
 
 	@Get("/logout")
@@ -31,10 +31,10 @@ public class LoginController {
 	@Post("/login")
 	public void login(String nome, String senha) throws Exception {
 		Usuario usuario = usuarioDao.login(nome, senha);
-		
+
 		if( usuario == null ) 
 			result.include("erro", "Login ou senha inválidos.").redirectTo(this).login();
 
-		result.redirectTo(IndexControllerTest.class).index();
+		result.redirectTo(IndexController.class).index();
 	}
 }
