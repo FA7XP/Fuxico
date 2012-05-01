@@ -39,7 +39,10 @@ public class ContaControllerTest {
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 
 		contaController.gravarConta(usuario);
-		assertEquals(0, resultMock.included().size());
+		String msgRetorno = (String) resultMock.included().get("ok");
+		
+		assertEquals(1, resultMock.included().size());
+		assertEquals("Conta do FUXIQUEIRO criada com sucesso.", msgRetorno);
 	}
 	
 	@Test
@@ -53,7 +56,7 @@ public class ContaControllerTest {
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(true);
 		contaController.gravarConta(usuario);
 		
-		String msgRetorno = (String) resultMock.included().get("erro");
+		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
 		assertEquals(1, resultMock.included().size());
 		assertEquals("Login já existente. Favor inserir um novo login.", msgRetorno);
@@ -70,7 +73,7 @@ public class ContaControllerTest {
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 		contaController.gravarConta(usuario);
 		
-		String msgRetorno = (String) resultMock.included().get("erro");
+		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
 		assertEquals(1, resultMock.included().size());
 		assertEquals("A Senha não pode ser igual ao login.", msgRetorno);
@@ -87,7 +90,7 @@ public class ContaControllerTest {
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 		
 		contaController.gravarConta(usuario);
-		String msgRetorno = (String) resultMock.included().get("erro");
+		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
 		assertEquals(1, resultMock.included().size());
 		assertEquals("A Senha não pode ser inferior a 6 caracteres.", msgRetorno);

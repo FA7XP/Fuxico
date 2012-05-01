@@ -2,11 +2,13 @@ package br.com.fa7.fuxico.controller;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.fa7.fuxico.dao.FuxicoDao;
 import br.com.fa7.fuxico.model.Fuxico;
 import br.com.fa7.fuxico.model.Usuario;
 
+@Resource
 public class FuxicarController {
 
 	private Result result;
@@ -17,9 +19,9 @@ public class FuxicarController {
 		this.fuxicoDao = fuxicoDao;
 	}
 	
-	@Get("/fuxicos")
+	@Get("/fuxicar")
 	public void fuxicar(){
-		result.include("fuxicos", fuxicoDao.list());
+//		result.include("fuxicos", fuxicoDao.list());
 	}
 
 	@Get("/atualizaFuxico")

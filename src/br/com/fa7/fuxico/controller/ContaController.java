@@ -19,22 +19,22 @@ public class ContaController {
 	}
 
 	@Get("/conta")
-	public void conta() {
+	public void conta(Usuario usuario) throws Exception {
+		gravarConta(usuario); 
 	}
 
 	@Post("/conta")
 	public void gravarConta(Usuario usuario) throws Exception {
 		if (usuarioDao.isLoginExiste(usuario.getLogin()))
-			result.include("erro", "Login já existente. Favor inserir um novo login.").redirectTo(ContaController.class).conta();
-
-		if (verificarSenhaNome(usuario.getLogin(), usuario.getSenha()))
-			result.include("erro", "A Senha não pode ser igual ao login.").redirectTo(ContaController.class).conta();
-
-		if (verificarTamanhoMinSenha(usuario.getSenha()))
-			result.include("erro", "A Senha não pode ser inferior a 6 caracteres.").redirectTo(ContaController.class).conta();
-
-		usuarioDao.save(usuario);
-//		result.redirectTo(LoginController.class).login();
+			result.include("erroConta", "Login já existente. Favor inserir um novo login.").redirectTo(LoginController.class).login();
+		else if (verificarSenhaNome(usuario.getLogin(), usuario.getSenha()))
+			result.include("erroConta", "A Senha não pode ser igual ao login.").redirectTo(LoginController.class).login();
+		else if (verificarTamanhoMinSenha(usuario.getSenha()))
+			result.include("erroConta", "A Senha não pode ser inferior a 6 caracteres.").redirectTo(LoginController.class).login();
+		else{
+			usuarioDao.save(usuario);
+			result.include("ok", "Conta do FUXIQUEIRO criada com sucesso.").redirectTo(LoginController.class).login();
+		}
 	}
 
 	public boolean verificarSenhaNome(String nome, String senha) {

@@ -1,4 +1,4 @@
-body { margin: 0; padding: 0; background-color: #000 !important; }
+body { margin: 0; padding: 0; background: url("../imagens/wallpaper.jpg") !important; }
 
 label.error { float: none; color: red; padding-left: 3px;  }
 
@@ -9,28 +9,20 @@ label.error { float: none; color: red; padding-left: 3px;  }
 #login form .input { margin-left: 60px !important; }
 #login form .clearfix > label { color: #fff; font-size: 13pt !important; }
 
-#logo {
-	background: url("../imagens/background_login.png") repeat-x scroll 0 0 transparent;
-    position: absolute; 
-    left: 1108px;
-    right: 0;
-    height: 211px;
-}
-
 #logoLogin {
-	background: url("../imagens/fuxico-login.png") no-repeat scroll 0 0 transparent;
+	background: url("../imagens/fuxico-login.png") no-repeat scroll 0 0 transparent ;
     float: left;
     height: 100%;
     width: 1110px;
+    padding-left: 30px;
 }
 
 #fuxico {
-	background: url("../imagens/fuxico.gif") no-repeat;
 	margin: 5px;
 	height: 22px;
 	width: 315px;
 }
 
-#logar { margin-left: 60px }
+#logar { margin-left: 118px }
 
-#erro { margin: -10px 0 5px 60px; height: 25px; color: white; }
+#erro { margin: 10px 0 5px 60px; height: 25px; color: red; }

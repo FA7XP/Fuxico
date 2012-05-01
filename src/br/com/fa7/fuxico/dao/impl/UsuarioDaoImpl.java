@@ -50,7 +50,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 
 			criteria.setProjection(p);
 			criteria.add(Restrictions.eq("u.login", login));
-			criteria.add(Restrictions.eq("c.senha", senha));
+			criteria.add(Restrictions.eq("u.senha", senha));
 
 			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			criteria.setResultTransformer(new AliasToBeanResultTransformer(Usuario.class));
