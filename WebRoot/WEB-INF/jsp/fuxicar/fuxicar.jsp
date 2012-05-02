@@ -112,7 +112,7 @@
 		
 		
 	</head>
-	<body background="../../../imagens/wallpaper.jpg">
+	<body background= "imagens/wallpaper.jpg" >
 		<form method="post" id="formLogin" onsubmit="alert('Gravado com sucesso');" action="/fuxico/fuxicar">
 			
 			<div id="topo">
@@ -136,7 +136,7 @@
 										<tr>
 											<td>
 												<p align="center">
-													<img src="../../../imagens/usuario.jpg" />
+													<img src="imagens/usuario.jpg" />
 												</p>
 											</td>
 											<td>
@@ -184,7 +184,7 @@
 														<td width="50px">
 															<p align="center">
 																<img style="width: 40px;"
-																	src="../../../imagens/usuario2.jpg" />
+																	src="imagens/usuario2.jpg" />
 															</p>
 														</td>
 														<td>
@@ -209,7 +209,7 @@
 														<td width="50px">
 															<p align="center">
 																<img style="width: 40px;"
-																	src="../../../imagens/usuario3.jpg" />
+																	src="imagens/usuario3.jpg" />
 															</p>
 														</td>
 														<td>
@@ -234,7 +234,7 @@
 														<td width="50px">
 															<p align="center">
 																<img style="width: 40px;"
-																	src="../../../imagens/usuario4.jpg" />
+																	src="imagens/usuario4.jpg" />
 															</p>
 														</td>
 														<td>
@@ -278,7 +278,7 @@
 									<tr>
 										<td width="50px">
 											<p align="center">
-												<img style="width: 40px;" src="../../../imagens/usuario2.jpg" />
+												<img style="width: 40px;" src="imagens/usuario2.jpg" />
 											</p>
 										</td>
 										<td>
