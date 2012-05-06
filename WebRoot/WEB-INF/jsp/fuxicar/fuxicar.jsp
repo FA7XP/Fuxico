@@ -113,12 +113,13 @@
 		
 	</head>
 	<body background= "imagens/wallpaper.jpg" >
-		<form method="post" id="formLogin" onsubmit="alert('Gravado com sucesso');" action="/fuxico/fuxicar">
+		<form method="post" id="formLogin" action="/fuxico/fuxicar">
 			
 			<div id="topo">
 			</div>
 	
 			<div id="principal">
+				${usuario.nome}
 				<div id="esquerda" style="float: left;">
 					<div id="perfil" align="center">
 						<table class="estilotabela" width="100%" cellpadding="2"

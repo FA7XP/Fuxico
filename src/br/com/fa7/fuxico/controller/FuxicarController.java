@@ -15,6 +15,7 @@ public class FuxicarController {
 	private Result result;
 	private FuxicoDao fuxicoDao;
 	private UsuarioSession usuarioSession;
+	private Usuario usuario;
 
 	public FuxicarController( Result result, FuxicoDao fuxicoDao, UsuarioSession usuarioSession) {
 		this.result = result;
@@ -24,6 +25,7 @@ public class FuxicarController {
 	
 	@Get("/fuxicar")
 	public void fuxicar(){
+		usuario = usuarioSession.getUsuario();
 	}
 	
 	@Post("/fuxicar")
@@ -40,5 +42,13 @@ public class FuxicarController {
 			
 			result.redirectTo(FuxicarController.class).fuxicar();
 		}
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }
