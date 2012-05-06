@@ -21,12 +21,6 @@ public class FuxicarController {
 	
 	@Get("/fuxicar")
 	public void fuxicar(){
-//		result.include("fuxicos", fuxicoDao.list());
-	}
-
-	@Get("/atualizaFuxico")
-	public void atualizaFuxico(){
-//		result.use(json()).from( fuxicoDao.list(), "fuxicos").serialize();
 	}
 	
 	@Post("/fuxicar")
@@ -38,7 +32,7 @@ public class FuxicarController {
 		} else {
 			Fuxico fuxico = new Fuxico();
 			fuxico.setFuxico(mensagem);
-			fuxico.setUsuario(usuario);
+			fuxico.setUsuario(new Usuario());
 			fuxicoDao.save(fuxico);
 			
 			result.redirectTo(FuxicarController.class).fuxicar();
