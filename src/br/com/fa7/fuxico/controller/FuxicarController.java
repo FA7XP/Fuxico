@@ -5,6 +5,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.fa7.fuxico.dao.FuxicoDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Fuxico;
 import br.com.fa7.fuxico.model.Usuario;
 
@@ -13,10 +14,12 @@ public class FuxicarController {
 
 	private Result result;
 	private FuxicoDao fuxicoDao;
+	private UsuarioSession usuarioSession;
 
-	public FuxicarController( Result result, FuxicoDao fuxicoDao) {
+	public FuxicarController( Result result, FuxicoDao fuxicoDao, UsuarioSession usuarioSession) {
 		this.result = result;
 		this.fuxicoDao = fuxicoDao;
+		this.usuarioSession = usuarioSession;
 	}
 	
 	@Get("/fuxicar")

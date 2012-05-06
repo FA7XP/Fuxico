@@ -13,8 +13,11 @@ public class Login extends FuxicoGenericSelenium{
 		checarTextoPresente("Digite o nome.");
 		checarTextoPresente("Digite a senha.");
 
+		checarTextoNaoPresente("Login ou senha inválidos.");
 		preencherCampoComTexto("login", "Samuel");
 		preencherCampoComTexto("senha", "Samuel");
 		clicarNoBotao("logar");
+		
+		checarTextoPresente("Login ou senha inválidos.");
 	}
 }

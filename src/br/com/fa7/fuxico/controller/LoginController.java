@@ -5,17 +5,21 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.fa7.fuxico.dao.UsuarioDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
+
 
 @Resource
 public class LoginController {
 
 	private Result result;
 	private UsuarioDao usuarioDao;
+	private UsuarioSession usuarioSession;
 
-	public LoginController( Result result, UsuarioDao usuarioDao) {
+	public LoginController( Result result, UsuarioDao usuarioDao, UsuarioSession usuarioSession) {
 		this.result = result;
 		this.usuarioDao = usuarioDao;
+		this.usuarioSession = usuarioSession;
 	}
 
 	@Get("/login")
@@ -32,8 +36,8 @@ public class LoginController {
 		Usuario usuario = usuarioDao.login(login, senha);
 
 		if( usuario == null ) 
-			result.include("erro", "Login ou senha inv√°lidos.");
-
-		result.redirectTo(FuxicarController.class).fuxicar();
+			result.include("erro", "Login ou senha inv·lidos.").redirectTo(this).login();
+		else
+			result.redirectTo(FuxicarController.class).fuxicar();
 	}
 }

@@ -11,12 +11,16 @@ import org.mockito.MockitoAnnotations;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.UsuarioDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 public class LoginControllerTest {
 
 	@Mock 
 	private UsuarioDao usuarioDaoMock;
+	@Mock 
+	private UsuarioSession usuarioSessionMock;
+
 	private Result resultMock;
 	private LoginController loginController;
 
@@ -24,7 +28,7 @@ public class LoginControllerTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.resultMock = new MockResult();
-		this.loginController = new LoginController(resultMock, usuarioDaoMock);
+		this.loginController = new LoginController(resultMock, usuarioDaoMock, usuarioSessionMock);
 	}
 
 	@Test
@@ -67,6 +71,6 @@ public class LoginControllerTest {
 		String msgRetorno = (String) resultMock.included().get("erro");
 
 		assertEquals(1, resultMock.included().size());
-		assertEquals("Login ou senha inv√°lidos.", msgRetorno);
+		assertEquals("Login ou senha inv·lidos.", msgRetorno);
 	}
 }

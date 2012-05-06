@@ -10,12 +10,15 @@ import org.mockito.MockitoAnnotations;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.FuxicoDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 
 public class FuxicarControllerTest{
 	@Mock 
 	private FuxicoDao fuxicoDaoMock;
+	@Mock 
+	private UsuarioSession usuarioSessionMock;
 
 	private Result resultMock;
 	private FuxicarController fuxicarController;
@@ -25,7 +28,7 @@ public class FuxicarControllerTest{
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.resultMock = new MockResult();
-		this.fuxicarController = new FuxicarController(resultMock, fuxicoDaoMock);
+		this.fuxicarController = new FuxicarController(resultMock, fuxicoDaoMock, usuarioSessionMock);
 	}
 
 	@Test

@@ -5,6 +5,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.fa7.fuxico.dao.UsuarioDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 @Resource
@@ -12,10 +13,12 @@ public class ContaController {
 
 	private Result result;
 	private UsuarioDao usuarioDao;
+	private UsuarioSession usuarioSession;
 
-	public ContaController(Result result, UsuarioDao usuarioDao) {
+	public ContaController(Result result, UsuarioDao usuarioDao, UsuarioSession usuarioSession) {
 		this.result = result;
 		this.usuarioDao = usuarioDao;
+		this.usuarioSession = usuarioSession;
 	}
 
 	@Get("/conta")
@@ -33,6 +36,7 @@ public class ContaController {
 			result.include("erroConta", "A Senha não pode ser inferior a 6 caracteres.").redirectTo(LoginController.class).login();
 		else{
 			usuarioDao.save(usuario);
+			usuarioSession.setUsuario(usuario);
 			result.include("ok", "Conta do FUXIQUEIRO criada com sucesso.").redirectTo(LoginController.class).login();
 		}
 	}

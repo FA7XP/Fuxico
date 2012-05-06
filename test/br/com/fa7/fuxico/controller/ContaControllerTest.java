@@ -11,12 +11,15 @@ import org.mockito.MockitoAnnotations;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.UsuarioDao;
+import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
 public class ContaControllerTest {
 
 	@Mock 
 	private UsuarioDao usuarioDaoMock;
+	@Mock 
+	private UsuarioSession usuarioSessionMock;
 
 	private Result resultMock;
 	private ContaController contaController;
@@ -25,7 +28,7 @@ public class ContaControllerTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.resultMock = new MockResult();
-		this.contaController = new ContaController(resultMock, usuarioDaoMock);
+		this.contaController = new ContaController(resultMock, usuarioDaoMock, usuarioSessionMock);
 	}
 
 	@Test

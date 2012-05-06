@@ -26,5 +26,4 @@ import br.com.fa7.fuxico.model.UsuarioTest;
 })
 
 public class AllTests {
-
 }
