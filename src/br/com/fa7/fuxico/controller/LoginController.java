@@ -14,7 +14,6 @@ public class LoginController {
 
 	private Result result;
 	private UsuarioDao usuarioDao;
-	@SuppressWarnings("unused")
 	private UsuarioSession usuarioSession;
 
 	public LoginController( Result result, UsuarioDao usuarioDao, UsuarioSession usuarioSession) {
@@ -39,6 +38,9 @@ public class LoginController {
 		if( usuario == null ) 
 			result.include("erro", "Login ou senha inv�lidos.").redirectTo(this).login();
 		else
+		{
+			usuarioSession.setUsuario(usuario);
 			result.redirectTo(FuxicarController.class).fuxicar();
+		}
 	}
 }

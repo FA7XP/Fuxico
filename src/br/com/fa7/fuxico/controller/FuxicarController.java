@@ -15,7 +15,6 @@ public class FuxicarController {
 	private Result result;
 	private FuxicoDao fuxicoDao;
 	private UsuarioSession usuarioSession;
-	private Usuario usuario;
 
 	public FuxicarController( Result result, FuxicoDao fuxicoDao, UsuarioSession usuarioSession) {
 		this.result = result;
@@ -25,15 +24,16 @@ public class FuxicarController {
 	
 	@Get("/fuxicar")
 	public void fuxicar(){
-		usuario = usuarioSession.getUsuario();
+		Usuario usuario = usuarioSession.getUsuario();
+		result.include("usuario", usuario);
 	}
 	
-	@Post("/fuxicar")
+	@Post("/fuxicar/{usuario.id}")
 	public void fuxicar(String mensagem, Usuario usuario){
 		if (mensagem == null || mensagem.isEmpty()) {
 			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			result.include("erroMensagem", "Digite uma mensagem com atÃ© 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com até 255 caracteres!");
 		} else {
 			Fuxico fuxico = new Fuxico();
 			fuxico.setFuxico(mensagem);
@@ -42,13 +42,5 @@ public class FuxicarController {
 			
 			result.redirectTo(FuxicarController.class).fuxicar();
 		}
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 }

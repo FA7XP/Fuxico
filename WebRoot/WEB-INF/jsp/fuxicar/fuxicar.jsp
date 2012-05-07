@@ -113,8 +113,7 @@
 		
 	</head>
 	<body background= "imagens/wallpaper.jpg" >
-		<form method="post" id="formLogin" action="/fuxico/fuxicar">
-			
+		<form id="formLogin" method="post" action="<c:url value='/fuxicar/${usuario.id}'/>">
 			<div id="topo">
 			</div>
 	
