@@ -73,7 +73,7 @@
 				
 				<div id="fuxico"></div>
 				<div id="logoLogin">
-					<form method="post" name="formLogin" id="formLogin" action="">
+					<form method="post" id="formLogin" action="">
 						<div id="erro">${erro}</div>
 						<div class="clearfix">
 							<label>Login:</label>
@@ -128,25 +128,4 @@
 			</div>
 		</div>
 	</body>
-	<!-- Exemplo
-	
-				<tbody class="content">
-					<c:forEach items="${cargos}" var="cargo">
-						<tr cargoid="${cargo.id}">
-							<td id="acoes">
-								<a href="<c:url value='/cargos/${cargo.id}/edit'/>">
-									<img src="<c:url value='/imagens/icones/editar.png'/>" title="Editar" />
-								</a>
-								<button type="button" onclick="intranet.formDelete(${cargo.id});">
-									<img src="<c:url value='/imagens/icones/excluir.png'/>" title="Excluir" />
-								</button>
-							</td>
-							<td>${cargo.nome}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-	
-	 
-	-->
-	
 </html>

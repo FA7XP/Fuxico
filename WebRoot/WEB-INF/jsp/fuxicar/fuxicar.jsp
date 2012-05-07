@@ -4,25 +4,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	
+
 		<script type="text/javascript">
-			setInterval("listar()",10000);
+			window.setInterval("listar()", 30000);
 			$(function() {
-			
-			function listar ( ) {
-					var url = "/fuxico/atualizaFuxico";
-					$.get(url)
-						.success(function(retorno) {
+				listar : function() {
+					var url = "/fuxico/fuxicos";
+					$.ajax({
+						url : url,
+						type : "GET",
+						cache : false,
+						success : function( retorno ) {
 							var fuxicos = retorno.fuxicos;
 							$(fuxicos).each(function(i, fuxico) {
-								$("#fuxicos table").prepend("<tr fuxicoId='"+ fuxico.id +"'><td><span>"+ fuxico.usuario +": </span>"+ fuxico.fuxico +"</td></tr>");
+								$("#fux table").prepend("<tr fuxicoid='"+ fuxico.id +"'><td><span class='nomeInfo'>"+ fuxico.usuario.nome +": </span>"+ fuxico.mensagem +"</td></tr>");
 							});
-						})
-						.error(function() {});
+						},
+						error : function (){}
+					});
 				}
 			});
 		</script>
-		
+
 		<title>Fuxicar</title>
 			<style type="text/css" media="screen">
 			#topo {
@@ -114,11 +117,9 @@
 	</head>
 	<body background= "imagens/wallpaper.jpg" >
 		<form id="formLogin" method="post" action="<c:url value='/fuxicar/${usuario.id}'/>">
-			<div id="topo">
-			</div>
+			<div id="topo"></div>
 	
 			<div id="principal">
-				${usuario.nome}
 				<div id="esquerda" style="float: left;">
 					<div id="perfil" align="center">
 						<table class="estilotabela" width="100%" cellpadding="2"
@@ -143,7 +144,7 @@
 												<table>
 													<tr>
 														<td>
-															Obama
+															${usuario.nome}
 														</td>
 													</tr>
 													<tr>
@@ -262,9 +263,16 @@
 						</table>
 					</div>
 				</div>
+				
+				
+				
+				
+				
+				
+				
+				
 				<div id="fuxicos">
-					<table class="estilotabela" width="100%" cellpadding="2"
-						cellspacing="2">
+					<table class="estilotabela" width="100%" cellpadding="2" cellspacing="2">
 						<tr>
 							<td class="estilotitulo">
 								<p align="center">
@@ -282,20 +290,10 @@
 											</p>
 										</td>
 										<td>
-											<table>
-												<tr>
-													<td>
-														12:00 - @hillary: Nada a dizer.
-													</td>
-												</tr>
-											</table>
+											<div id="fux"><table class="defaultArgsTable table-striped"></table></div>
 										</td>
 									</tr>
 								</table>
-								
-								<div id="avisos">
-									<table class="defaultArgsTable table-striped"></table>
-								</div>
 							</td>
 						</tr>
 					</table>
@@ -303,14 +301,12 @@
 						<table>
 							<tr>
 								<td>
-									<textarea NAME="comments" COLS=36 ROWS=4></textarea>
+									<textarea name="mensagem" COLS=36 ROWS=4/>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<p align="right">
-										<INPUT TYPE=SUBMIT VALUE="Fuxicar">
-									</p>
+									<p align="right"><input type="submit" value="Fuxicar"/></p>
 								</td>
 							</tr>
 						</table>
