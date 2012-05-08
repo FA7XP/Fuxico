@@ -290,7 +290,7 @@
 											</p>
 										</td>
 										<td>
-											<div id="fux"><table class="defaultArgsTable table-striped"></table></div>
+											fhjksdfhjkdshjk
 										</td>
 									</tr>
 								</table>
@@ -301,7 +301,7 @@
 						<table>
 							<tr>
 								<td>
-									<textarea name="mensagem" COLS=36 ROWS=4/>
+									<textarea name="mensagem" COLS=36 ROWS=4></textarea>
 								</td>
 							</tr>
 							<tr>
@@ -312,6 +312,9 @@
 						</table>
 					</div>
 				</div>
+				
+				
+				
 			</div>
 	    </form>
 	</body>

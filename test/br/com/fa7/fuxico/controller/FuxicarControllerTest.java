@@ -13,11 +13,10 @@ import br.com.fa7.fuxico.dao.FuxicoDao;
 import br.com.fa7.fuxico.dao.UsuarioSession;
 import br.com.fa7.fuxico.model.Usuario;
 
-
-public class FuxicarControllerTest{
-	@Mock 
+public class FuxicarControllerTest {
+	@Mock
 	private FuxicoDao fuxicoDaoMock;
-	@Mock 
+	@Mock
 	private UsuarioSession usuarioSessionMock;
 
 	private Result resultMock;
@@ -28,7 +27,8 @@ public class FuxicarControllerTest{
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.resultMock = new MockResult();
-		this.fuxicarController = new FuxicarController(resultMock, fuxicoDaoMock, usuarioSessionMock);
+		this.fuxicarController = new FuxicarController(resultMock,
+				fuxicoDaoMock, usuarioSessionMock);
 	}
 
 	@Test
@@ -46,16 +46,16 @@ public class FuxicarControllerTest{
 	public void naoDevePermitirEnviarMsgAcimaDoPermitido() {
 		iniciaUsuario();
 
-		fuxicarController.fuxicar(
-				"01234567890123456789012345678901234567890123456789012345678901234567890123456789" +
-				"01234567890123456789012345678901234567890123456789012345678901234567890123456789" +
-				"01234567890123456789012345678901234567890123456789012345678901234567890123456789" +
-				"1111111111111111",
-				usuario);
+		fuxicarController
+				.fuxicar(
+						"01234567890123456789012345678901234567890123456789012345678901234567890123456789"
+								+ "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
+								+ "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
+								+ "1111111111111111", usuario);
 		String msgRetorno = (String) resultMock.included().get("erroMensagem");
 
 		assertEquals(1, resultMock.included().size());
-		assertEquals("Digite uma mensagem com até 255 caracteres!", msgRetorno);		
+		assertEquals("Digite uma mensagem com até 255 caracteres!", msgRetorno);
 
 	}
 
@@ -85,6 +85,20 @@ public class FuxicarControllerTest{
 
 		fuxicarController.fuxicar("fuxicando", usuario);
 		assertEquals(0, resultMock.included().size());
+	}
+
+	@Test()
+	public void usuarioNoInicioDaMensagem() {
+		String usuarioTeste = fuxicarController
+				.localizarUsuarioNoInicioDaMensagem("@chico blabla");
+		assertEquals("chico", usuarioTeste);
+	}
+
+	@Test()
+	public void usuarioNoMeioDaMensagem() {
+		String usuarioTeste = fuxicarController
+				.localizarUsuarioNoMeioDaMensagem(" blabla @chico blabla .");
+		assertEquals("chico", usuarioTeste);
 	}
 
 	private void iniciaUsuario() {

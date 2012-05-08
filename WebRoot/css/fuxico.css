@@ -11,7 +11,7 @@
 
 .camada { clear:both }
 
-#fuxicos { max-height: 10px; overflow: hidden; }
+
 
 .bloco, .aniversariantes, .videos { max-height: 315px; overflow-y: auto; }
 
