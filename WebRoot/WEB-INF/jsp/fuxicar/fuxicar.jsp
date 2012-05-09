@@ -5,27 +5,13 @@
 <html>
 	<head>
 
-		<script type="text/javascript">
-			window.setInterval("listar()", 30000);
-			$(function() {
-				listar : function() {
-					var url = "/fuxico/fuxicos";
-					$.ajax({
-						url : url,
-						type : "GET",
-						cache : false,
-						success : function( retorno ) {
-							var fuxicos = retorno.fuxicos;
-							$(fuxicos).each(function(i, fuxico) {
-								$("#fux table").prepend("<tr fuxicoid='"+ fuxico.id +"'><td><span class='nomeInfo'>"+ fuxico.usuario.nome +": </span>"+ fuxico.mensagem +"</td></tr>");
-							});
-						},
-						error : function (){}
-					});
-				}
-			});
-		</script>
+		<script src="${contextPath}/js/jquery/jquery-1.7.0.min.js"></script>
+		<script src="${contextPath}/js/jquery/jquery-ui-1.8.13.custom.min.js"></script>
+		<script src="${contextPath}/js/jquery/jquery.ui.datepicker-pt-BR.js"></script>
+		<script src="${contextPath}/js/jquery/jquery.validate.min.js"></script>
 
+		<link rel="stylesheet" type="text/css" href="css/fuxico.css" />
+		
 		<title>Fuxicar</title>
 			<style type="text/css" media="screen">
 			#topo {
@@ -264,13 +250,6 @@
 					</div>
 				</div>
 				
-				
-				
-				
-				
-				
-				
-				
 				<div id="fuxicos">
 					<table class="estilotabela" width="100%" cellpadding="2" cellspacing="2">
 						<tr>
@@ -282,18 +261,15 @@
 						</tr>
 						<tr>
 							<td>
-								<table border="0" height="20px" width="100%">
-									<tr>
-										<td width="50px">
-											<p align="center">
-												<img style="width: 40px;" src="imagens/usuario2.jpg" />
-											</p>
-										</td>
-										<td>
-											fhjksdfhjkdshjk
-										</td>
-									</tr>
-								</table>
+								<div id="mensagens">
+									<div class="botao-top"></div>
+									<table class="defaultArgsTable table-striped" border="0" height="20px" width="100%">
+										<c:forEach items="${fuxicos}" var="fuxico">
+											<tr fuxicoid='fuxico.id'><td><span class='nomeInfo'>${fuxico.usuario.nome}: </span>${fuxico.fuxico}</td></tr>	
+										</c:forEach>
+									</table>
+									<div class="botao-bottom"></div>
+								</div>
 							</td>
 						</tr>
 					</table>
@@ -313,9 +289,27 @@
 					</div>
 				</div>
 				
-				
-				
 			</div>
 	    </form>
+	    <script type="text/javascript">
+			$(function() {
+				window.setInterval("listar()", 30000);
+			});
+			function listar() {
+				var url = "/fuxico/fuxicos";
+				$.ajax({
+					url : url,
+					type : "GET",
+					cache : false,
+					success : function( retorno ) {
+						var fuxicos = retorno.fuxicos;
+						$(fuxicos).each(function(i, fuxico) {
+							$("#mensagens table").prepend("<tr fuxicoid='"+ fuxico.id +"'><td><span class='nomeInfo'>"+ fuxico.usuario.nome +": </span>"+ fuxico.fuxico +"</td></tr>");
+						});
+					},
+					error : function (){}
+				});
+			}
+		</script>
 	</body>
 </html>

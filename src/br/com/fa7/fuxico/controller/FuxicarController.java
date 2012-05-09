@@ -29,18 +29,34 @@ public class FuxicarController {
 
 	@Get("/fuxicar")
 	public void fuxicar() {
-		result.include("usuario", usuarioSession.getUsuario());
+		
+		Usuario usuario = new Usuario();
+		usuario.setNome("teste");
+		
+		Fuxico fuxico1 = new Fuxico();
+		fuxico1.setUsuario(usuario);
+		fuxico1.setFuxico("teste");
+
+		Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
+		fuxicos.add(fuxico1);
+		
+		
+		result.include("fuxicos", fuxicos).include("usuario", usuarioSession.getUsuario());
 	}
 
-	@Get("/fuxicar/fuxicos")
+	@Get("/fuxicos")
 	public void fuxicos() {
+		Usuario usuario = new Usuario();
+		usuario.setNome("teste");
+		
 		Fuxico fuxico1 = new Fuxico();
+		fuxico1.setUsuario(usuario);
 		fuxico1.setFuxico("teste");
 
 		Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
 		fuxicos.add(fuxico1);
 
-		result.use(json()).from(fuxicos, "fuxicos").serialize();
+		result.use(json()).from(fuxicos, "fuxicos").include("usuario").serialize();
 	}
 
 	@Post("/fuxicar/{usuario.id}")

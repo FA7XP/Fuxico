@@ -11,9 +11,31 @@
 
 .camada { clear:both }
 
-
+#mensagens { max-height: 420px; overflow: hidden; }
 
 .bloco, .aniversariantes, .videos { max-height: 315px; overflow-y: auto; }
+
+.botao-top { background: url(../imagens/icones/seta-top.png); }
+.botao-bottom { background: url(../imagens/icones/seta-bottom.png); }
+.botao-top, .botao-bottom {
+	height: 15px;
+	background-color: #f4f4f4;
+	background-position: center;
+	background-repeat: no-repeat;
+	border: 1px solid gainsboro;
+	color: #7B7B7B;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	border-image: initial;
+	width: 99.6%;
+	margin: 0 auto;
+}
+.botao-top:hover { background-color: #f7f7f7; background-image: url(../imagens/icones/seta-top-hover.png); }
+.botao-bottom:hover { background-color: #f7f7f7; background-image: url(../imagens/icones/seta-bottom-hover.png); }
+
 
 .menuPrincipal {
 	border: 1px solid #C5DBEC;
