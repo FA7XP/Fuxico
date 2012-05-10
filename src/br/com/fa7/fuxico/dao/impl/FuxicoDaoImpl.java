@@ -34,8 +34,8 @@ public class FuxicoDaoImpl extends GenericDaoImpl implements FuxicoDao {
 		//		
 		// criteria.createCriteria("f.usuario", "usuario");
 		// criteria.createCriteria("f.data", "data");
-		//criteria.createCriteria("f.fuxico", "fuxico").add(
-		//		Restrictions.eq("usuario_id", id));
+		// criteria.createCriteria("f.fuxico", "fuxico").add(
+		// Restrictions.eq("usuario_id", id));
 
 		return criteria.list();
 	}
@@ -57,13 +57,19 @@ public class FuxicoDaoImpl extends GenericDaoImpl implements FuxicoDao {
 
 	}
 
-	/*
-	 * public List<Fuxico> consultarFuxicoPorLogin(String login) { EntityManager
-	 * gerente = fabrica.createEntityManager(); try { Query consulta = gerente
-	 * .createNamedQuery("consultarFuxicosPorLogin");
-	 * consulta.setParameter("login", login); return consulta.getResultList(); }
-	 * catch (NoResultException e) { return null; } finally { gerente.close(); }
-	 * 
-	 * }
-	 */
+	public List<Fuxico> consultarFuxicoPorLogin(String login) {
+		EntityManager gerente = fabrica.createEntityManager();
+		try {
+			Query consulta = gerente
+					.createNamedQuery("consultarFuxicosPorLogin");
+			consulta.setParameter("login", login);
+			return consulta.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} finally {
+			gerente.close();
+		}
+
+	}
+
 }

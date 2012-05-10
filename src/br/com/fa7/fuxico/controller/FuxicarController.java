@@ -1,10 +1,11 @@
 package br.com.fa7.fuxico.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
-import static br.com.caelum.vraptor.view.Results.json;
+import java.util.List;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -40,8 +41,9 @@ public class FuxicarController {
 		fuxico1.setUsuario(usuario);
 		fuxico1.setFuxico("teste");
 
-		Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
-		fuxicos.add(fuxico1);
+		// Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
+		List<Fuxico> fuxicos;
+		fuxicos = fuxicoDao.consultarFuxicoPorLogin(usuario.getLogin());
 
 		result.include("fuxicos", fuxicos).include("usuario",
 				usuarioSession.getUsuario());
