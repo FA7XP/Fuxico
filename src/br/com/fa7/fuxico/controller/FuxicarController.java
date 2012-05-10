@@ -2,6 +2,8 @@ package br.com.fa7.fuxico.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+
 import static br.com.caelum.vraptor.view.Results.json;
 
 import br.com.caelum.vraptor.Get;
@@ -29,26 +31,27 @@ public class FuxicarController {
 
 	@Get("/fuxicar")
 	public void fuxicar() {
-		
-		Usuario usuario = new Usuario();
-		usuario.setNome("teste");
-		
+
+		// Usuario usuario = new Usuario();
+		Usuario usuario = usuarioSession.getUsuario();
+		usuario.setNome(usuario.getNome());
+
 		Fuxico fuxico1 = new Fuxico();
 		fuxico1.setUsuario(usuario);
 		fuxico1.setFuxico("teste");
 
 		Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
 		fuxicos.add(fuxico1);
-		
-		
-		result.include("fuxicos", fuxicos).include("usuario", usuarioSession.getUsuario());
+
+		result.include("fuxicos", fuxicos).include("usuario",
+				usuarioSession.getUsuario());
 	}
 
 	@Get("/fuxicos")
 	public void fuxicos() {
 		Usuario usuario = new Usuario();
 		usuario.setNome("teste");
-		
+
 		Fuxico fuxico1 = new Fuxico();
 		fuxico1.setUsuario(usuario);
 		fuxico1.setFuxico("teste");
@@ -56,7 +59,8 @@ public class FuxicarController {
 		Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
 		fuxicos.add(fuxico1);
 
-		result.use(json()).from(fuxicos, "fuxicos").include("usuario").serialize();
+		result.use(json()).from(fuxicos, "fuxicos").include("usuario")
+				.serialize();
 	}
 
 	@Post("/fuxicar/{usuario.id}")
@@ -70,13 +74,11 @@ public class FuxicarController {
 			Fuxico fuxico = new Fuxico();
 			fuxico.setFuxico(mensagem);
 			fuxico.setUsuario(usuario);
+			fuxico.setData(new Date());
 			fuxicoDao.save(fuxico);
 
 			result.redirectTo(FuxicarController.class).fuxicar();
 		}
-
-		// Primeiro caractere da msg = @
-		// A mensagem contem __ @exemplo
 
 	}
 

@@ -55,7 +55,7 @@ public class FuxicarControllerTest {
 		String msgRetorno = (String) resultMock.included().get("erroMensagem");
 
 		assertEquals(1, resultMock.included().size());
-		assertEquals("Digite uma mensagem com atÃ© 255 caracteres!", msgRetorno);
+		assertEquals("Digite uma mensagem com até 255 caracteres!", msgRetorno);
 
 	}
 
@@ -99,6 +99,13 @@ public class FuxicarControllerTest {
 		String usuarioTeste = fuxicarController
 				.localizarUsuarioNoMeioDaMensagem(" blabla @chico blabla .");
 		assertEquals("chico", usuarioTeste);
+	}
+
+	@Test()
+	public void mensagemSemUsuario() {
+		String usuarioTeste = fuxicarController
+				.localizarUsuarioNoMeioDaMensagem(" blabla chico blabla .");
+		assertEquals("", usuarioTeste);
 	}
 
 	private void iniciaUsuario() {

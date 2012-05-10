@@ -6,4 +6,6 @@ import br.com.fa7.fuxico.model.Fuxico;
 
 public interface FuxicoDao extends GenericDao {
 	public List<Fuxico> list();
+	public void salvarFuxico(Fuxico fuxico);
+	//public List<Fuxico> consultarFuxicoPorLogin (String login);
 }
