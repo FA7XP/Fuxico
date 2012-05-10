@@ -28,14 +28,9 @@ public class FuxicoDaoImpl extends GenericDaoImpl implements FuxicoDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Fuxico> list() {
+	public List<Fuxico> listaFuxicosByUsuario(Long usuarioId) {
 		Criteria criteria = getSession().createCriteria(Fuxico.class, "f");
-		// criteria.createCriteria("f.usuario", "u");
-		//		
-		// criteria.createCriteria("f.usuario", "usuario");
-		// criteria.createCriteria("f.data", "data");
-		// criteria.createCriteria("f.fuxico", "fuxico").add(
-		// Restrictions.eq("usuario_id", id));
+		criteria.add(Restrictions.eq("f.usuario.id", usuarioId));
 
 		return criteria.list();
 	}

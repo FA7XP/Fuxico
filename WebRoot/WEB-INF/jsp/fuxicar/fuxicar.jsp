@@ -296,7 +296,7 @@
 				window.setInterval("listar()", 30000);
 			});
 			function listar() {
-				var url = "/fuxico/fuxicos";
+				var url = "/fuxico/fuxicos/${usuario.id}";
 				$.ajax({
 					url : url,
 					type : "GET",

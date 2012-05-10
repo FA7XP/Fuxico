@@ -47,8 +47,8 @@ public class FuxicoDaoTest {
 		fuxico2.setFuxico("mensagem Fuxico 2");
 		fuxicoDao.save(fuxico2);
 		
-		when(fuxicoDao.list()).thenReturn(Arrays.asList(fuxico1, fuxico2));
+		when(fuxicoDao.listaFuxicosByUsuario(null)).thenReturn(Arrays.asList(fuxico1, fuxico2));
 
-		assertEquals(2, fuxicoDao.list().size());
+		assertEquals(2, fuxicoDao.listaFuxicosByUsuario(null).size());
 	}
 }

@@ -25,7 +25,11 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 
 		return criteria.list();
 	}
-
+	
+	public Usuario load( Long id ) {
+		return (Usuario) getSession().load(Usuario.class, id);
+	}
+	
 	public boolean isLoginExiste( String login ) {
 		Criteria criteria = getSession().createCriteria(Usuario.class, "user");
 
