@@ -17,12 +17,22 @@ label.error { float: none; color: red; padding-left: 3px;  }
     padding-left: 30px;
 }
 
+#google {
+	background: url("../imagens/GoogleLogin.jpg") no-repeat scroll 0 0 transparent ;
+    margin-left: 50px;
+    margin-top: 40px; 
+    float: left;
+    height: 100%;
+    width: 1110px;
+    padding-left: 30px;
+}
+
 #fuxico {
 	margin: 5px;
 	height: 22px;
 	width: 315px;
 }
 
-#logar { margin-left: 118px }
+#logar { margin-left: 60px }
 
 #erro { margin: 10px 0 5px 60px; height: 25px; color: red; }
