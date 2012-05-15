@@ -30,6 +30,10 @@ public class FuxicarController {
 		this.usuarioDao = usuarioDao;
 		this.usuarioSession = usuarioSession;
 	}
+	
+	public FuxicarController(){
+		
+	}
 
 	@Get("/fuxicar")
 	public void fuxicar() {
@@ -120,5 +124,38 @@ public class FuxicarController {
 			}
 		}
 		return usuario;
+	}
+	
+	public String retornarMensagemComLink(String mensagemSemLink) {
+
+		String mensagemComLink = "";
+
+		for (int i = 0; i < mensagemSemLink.length(); i++) {
+			if (mensagemSemLink.charAt(i) == '@') {
+				if (i == 0) {
+					String usuario = "";
+					for (int j = i + 1; j < mensagemSemLink.length(); j++) {
+						if (mensagemSemLink.charAt(j) != ' ') {
+							usuario += mensagemSemLink.charAt(j);
+						} else {
+							break;
+						}
+					}
+					i = i + usuario.length() + 1;
+					if (usuarioDao.isLoginExiste(usuario) == true) {
+						mensagemComLink = "<a href='link/11'>@" + usuario
+								+ "</a>";
+					} else {
+						mensagemComLink = "@" + usuario + " ";
+					}
+				} else {
+					//blabla ronaldo!
+				}
+			} else {
+				mensagemComLink += mensagemSemLink.charAt(i);
+			}
+		}
+
+		return mensagemComLink;
 	}
 }

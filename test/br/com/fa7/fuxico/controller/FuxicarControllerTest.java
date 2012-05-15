@@ -30,7 +30,8 @@ public class FuxicarControllerTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.resultMock = new MockResult();
-		this.fuxicarController = new FuxicarController(resultMock, fuxicoDaoMock, usuarioDaoMock, usuarioSessionMock);
+		this.fuxicarController = new FuxicarController(resultMock,
+				fuxicoDaoMock, usuarioDaoMock, usuarioSessionMock);
 	}
 
 	@Test
@@ -108,6 +109,13 @@ public class FuxicarControllerTest {
 		String usuarioTeste = fuxicarController
 				.localizarUsuarioNoMeioDaMensagem(" blabla chico blabla .");
 		assertEquals("", usuarioTeste);
+	}
+
+	@Test()
+	public void mensagemComUsuarioNoInicio() {
+		String mensagem = "@testes eu sou eu";
+		assertEquals("@testes eu sou eu",
+				fuxicarController.retornarMensagemComLink(mensagem));
 	}
 
 	private void iniciaUsuario() {

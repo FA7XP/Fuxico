@@ -9,4 +9,5 @@ public interface UsuarioDao extends GenericDao {
 	public Usuario load( Long id );
 	public boolean isLoginExiste(String login);
 	public Usuario login( String nome, String senha );
+	public Usuario getIdlogin(String login);
 }

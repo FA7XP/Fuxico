@@ -79,10 +79,15 @@
 			<version>1.8.5</version>
 		</dependency>
 		<dependency>
-        	<groupId>org.seleniumhq.selenium</groupId>
-        	<artifactId>selenium-java</artifactId>
-        	<version>2.21.0</version>
-    	</dependency> 
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.21.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openid4java</groupId>
+			<artifactId>openid4java-nodeps</artifactId>
+			<version>0.9.6</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${basedir}/src</sourceDirectory>
