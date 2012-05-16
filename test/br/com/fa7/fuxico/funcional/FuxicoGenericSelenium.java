@@ -20,7 +20,7 @@ public class FuxicoGenericSelenium {
 	public static void setUp(){
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://localhost:8081/fuxico/");
+		driver.get("http://localhost:8080/fuxico/");
 	}
 	
 	protected void clicarNoElemento(By by) {

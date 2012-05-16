@@ -1,6 +1,10 @@
 package br.com.fa7.fuxico.controller;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +16,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.FuxicoDao;
 import br.com.fa7.fuxico.dao.UsuarioDao;
 import br.com.fa7.fuxico.dao.UsuarioSession;
+import br.com.fa7.fuxico.model.Fuxico;
 import br.com.fa7.fuxico.model.Usuario;
 
 public class FuxicarControllerTest {
@@ -74,6 +79,28 @@ public class FuxicarControllerTest {
 	}
 
 	@Test()
+	public void fuxicarVerificaMensagemFuxicar() {
+		Usuario luiz = new Usuario();
+		luiz.setId(9999L);
+		luiz.setLogin("luiz");
+
+		Usuario felipe = new Usuario();
+		felipe.setLogin("felipe");
+		
+		String mensagem = "Ola @luiz como vai";
+		
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		usuarios.add(felipe);
+		usuarios.add(luiz);
+		
+		when(usuarioDaoMock.list()).thenReturn(usuarios);
+
+		String msgRetorno = fuxicarController.montaMensagem(mensagem);
+		
+		assertEquals("Ola <a href='link/9999'>@luiz </a>como vai", msgRetorno);
+	}
+
+	@Test()
 	public void mensagemEnviada() {
 		iniciaUsuario();
 
@@ -90,33 +117,6 @@ public class FuxicarControllerTest {
 		assertEquals(0, resultMock.included().size());
 	}
 
-	@Test()
-	public void usuarioNoInicioDaMensagem() {
-		String usuarioTeste = fuxicarController
-				.localizarUsuarioNoInicioDaMensagem("@chico blabla");
-		assertEquals("chico", usuarioTeste);
-	}
-
-	@Test()
-	public void usuarioNoMeioDaMensagem() {
-		String usuarioTeste = fuxicarController
-				.localizarUsuarioNoMeioDaMensagem(" blabla @chico blabla .");
-		assertEquals("chico", usuarioTeste);
-	}
-
-	@Test()
-	public void mensagemSemUsuario() {
-		String usuarioTeste = fuxicarController
-				.localizarUsuarioNoMeioDaMensagem(" blabla chico blabla .");
-		assertEquals("", usuarioTeste);
-	}
-
-	@Test()
-	public void mensagemComUsuarioNoInicio() {
-		String mensagem = "@testes eu sou eu";
-		assertEquals("@testes eu sou eu",
-				fuxicarController.retornarMensagemComLink(mensagem));
-	}
 
 	private void iniciaUsuario() {
 		usuario = new Usuario();

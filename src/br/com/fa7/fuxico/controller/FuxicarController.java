@@ -63,7 +63,7 @@ public class FuxicarController {
 		if (mensagem == null || mensagem.isEmpty()) {
 			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			result.include("erroMensagem", "Digite uma mensagem com atï¿½ 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com até 255 caracteres!");
 		} else {
 			usuario = usuarioDao.load(usuario.getId());
 			
@@ -77,7 +77,7 @@ public class FuxicarController {
 		}
 	}
 
-	private String montaMensagem(String mensagem){
+	public String montaMensagem(String mensagem){
 		List<Usuario> usuarios = usuarioDao.list();
 
 		for (Usuario usuario : usuarios) {
@@ -88,75 +88,4 @@ public class FuxicarController {
 		
 		return mensagem;
 	}
-	
-	
-//	public String localizarUsuarioNoInicioDaMensagem(String mensagem) {
-//		String usuario = "";
-//		if (mensagem.startsWith("@")) {
-//			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, 1);
-//		}
-//		return usuario;
-//	}
-//
-//	public String localizarUsuarioNoMeioDaMensagem(String mensagem) {
-//		String usuario = "";
-//		if (mensagem.contains("@")) {
-//			int posicaoInicioUsuario = 0;
-//			for (int i = 0; i < mensagem.length(); i++) {
-//				if (mensagem.charAt(i) == '@') {
-//					if (mensagem.charAt(i - 1) == ' ') {
-//						posicaoInicioUsuario = i + 1;
-//						break;
-//					}
-//					usuario += mensagem.charAt(i);
-//				}
-//			}
-//
-//			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, posicaoInicioUsuario);
-//		}
-//		return usuario;
-//	}
-//
-//	private String verificarNomeUsuarioMensagem(String mensagem, String usuario, int posicaoInicioUsuario) {
-//		for (int i = posicaoInicioUsuario; i < mensagem.length(); i++) {
-//			if (mensagem.charAt(i) != ' ') {
-//				usuario += mensagem.charAt(i);
-//			} else {
-//				break;
-//			}
-//		}
-//		return usuario;
-//	}
-//	
-//	public String retornarMensagemComLink(String mensagemSemLink) {
-//
-//		String mensagemComLink = "";
-//
-//		for (int i = 0; i < mensagemSemLink.length(); i++) {
-//			if (mensagemSemLink.charAt(i) == '@') {
-//				if (i == 0) {
-//					String usuario = "";
-//					for (int j = i + 1; j < mensagemSemLink.length(); j++) {
-//						if (mensagemSemLink.charAt(j) != ' ') {
-//							usuario += mensagemSemLink.charAt(j);
-//						} else {
-//							break;
-//						}
-//					}
-//					i = i + usuario.length() + 1;
-//					if (usuarioDao.isLoginExiste(usuario) == true) {
-//						mensagemComLink = "<a href='link/11'>@" + usuario+ "</a>";
-//					} else {
-//						mensagemComLink = "@" + usuario + " ";
-//					}
-//				} else {
-//					//blabla ronaldo!
-//				}
-//			} else {
-//				mensagemComLink += mensagemSemLink.charAt(i);
-//			}
-//		}
-//
-//		return mensagemComLink;
-//	}
 }

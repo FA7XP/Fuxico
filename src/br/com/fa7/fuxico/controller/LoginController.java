@@ -36,7 +36,7 @@ public class LoginController {
 		Usuario usuario = usuarioDao.login(login, senha);
 
 		if( usuario == null ) 
-			result.include("erro", "Login ou senha inv√°lidos.").redirectTo(this).login();
+			result.include("erro", "Login ou senha inv·lidos.").redirectTo(this).login();
 		else{
 			usuarioSession.setUsuario(usuario);
 			result.redirectTo(FuxicarController.class).fuxicar(usuario, true);
