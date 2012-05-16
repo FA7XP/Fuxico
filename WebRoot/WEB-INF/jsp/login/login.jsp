@@ -193,7 +193,7 @@ td {
 																		</td>
 																		<td>
 																			<form
-																				action="/fuxico/servlet/LoginServlet?identifier=https://www.google.com/accounts/o8/id"
+																				action="/fuxico/servlet/LoginServlet?identifier=http://www.google.com/accounts/o8/id"
 																				method="post">
 																				<input style="width: 60px; height: 25px;" src="imagens/loginwithgoogle.PNG"
 																					type="image"

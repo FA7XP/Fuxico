@@ -21,7 +21,7 @@ import org.openid4java.message.ax.FetchResponse;
 public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	final static String GOOGLE = "https://www.google.com/accounts/o8/id";
+	final static String GOOGLE = "http://www.google.com/accounts/o8/id";
 	private ConsumerManager consumerManager;
 
 	public void init(ServletConfig config) throws ServletException {
