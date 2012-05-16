@@ -27,7 +27,26 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 	}
 	
 	public Usuario load( Long id ) {
-		return (Usuario) getSession().load(Usuario.class, id);
+		try {
+			Criteria criteria = getSession().createCriteria(Usuario.class, "u");
+
+			ProjectionList p = Projections.projectionList().create();
+			p.add(Projections.property("u.id"), "id");
+			p.add(Projections.property("u.nome"), "nome");
+			p.add(Projections.property("u.login"), "login");
+			p.add(Projections.property("u.email"), "email");
+
+			criteria.setProjection(p);
+			criteria.add(Restrictions.eq("u.id", id));
+
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.setResultTransformer(new AliasToBeanResultTransformer(Usuario.class));
+
+			return (Usuario) criteria.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao buscar usuario");
+		}
 	}
 	
 	public boolean isLoginExiste( String login ) {
@@ -62,7 +81,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 			return (Usuario) criteria.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao tenatar efetuar Login");
+			throw new RuntimeException("Erro ao tentar efetuar Login");
 		}
 	}
 	
@@ -85,7 +104,7 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 			return (Usuario) criteria.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao tenatar efetuar Login");
+			throw new RuntimeException("Erro ao tentar efetuar Login");
 		}
 	}
 

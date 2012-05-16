@@ -31,27 +31,14 @@ public class FuxicarController {
 		this.usuarioSession = usuarioSession;
 	}
 	
-	public FuxicarController(){
-		
-	}
-
 	@Get("/fuxicar")
-	public void fuxicar() {
+	public void fuxicar(Usuario usuario, boolean exibirFuxicar) {
 
-		// Usuario usuario = new Usuario();
-		Usuario usuario = usuarioSession.getUsuario();
-		usuario.setNome(usuario.getNome());
-
-		Fuxico fuxico1 = new Fuxico();
-		fuxico1.setUsuario(usuario);
-		fuxico1.setFuxico("teste");
-
-		// Collection<Fuxico> fuxicos = new ArrayList<Fuxico>();
-		List<Fuxico> fuxicos;
-		fuxicos = fuxicoDao.consultarFuxicoPorLogin(usuario.getLogin());
-
-		result.include("fuxicos", fuxicos).include("usuario",
-				usuarioSession.getUsuario());
+		if(usuario == null)
+			usuario = usuarioSession.getUsuario();
+		
+		List<Fuxico> fuxicos = fuxicoDao.listaFuxicosByUsuario(usuario.getId());
+		result.include("fuxicos", fuxicos).include("usuario", usuario).include("exibirFuxicar", exibirFuxicar);
 	}
 
 	@Get("/fuxicos/{usuario.id}")
@@ -65,8 +52,9 @@ public class FuxicarController {
 	@Get("/link/{usuarioId}")
 	public void fuxicos(Long usuarioId) {
 		if(usuarioId != null){
-			Collection<Fuxico> fuxicos = fuxicoDao.listaFuxicosByUsuario(usuarioId);
-			result.use(json()).from(fuxicos, "fuxicos").include("usuario").serialize();
+			Usuario usuario = usuarioDao.load(usuarioId); 
+			boolean exibirFuxico = usuarioSession.getUsuario().getId().equals(usuarioId);
+			result.redirectTo(this).fuxicar(usuario, exibirFuxico);
 		}
 	}
 
@@ -75,87 +63,100 @@ public class FuxicarController {
 		if (mensagem == null || mensagem.isEmpty()) {
 			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			result.include("erroMensagem",
-					"Digite uma mensagem com até 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com atï¿½ 255 caracteres!");
 		} else {
+			usuario = usuarioDao.load(usuario.getId());
+			
 			Fuxico fuxico = new Fuxico();
-			fuxico.setFuxico("<a href='link/1'>samuelTeste</a> mamamia");
-			fuxico.setUsuario(usuarioDao.load(usuario.getId()));
+			fuxico.setUsuario(usuario);
+			fuxico.setFuxico(montaMensagem(mensagem));
 			fuxico.setData(new Date());
 			fuxicoDao.save(fuxico);
 
-			result.redirectTo(FuxicarController.class).fuxicar();
+			result.redirectTo(this).fuxicar(usuario, true);
 		}
 	}
 
-	public String localizarUsuarioNoInicioDaMensagem(String mensagem) {
-		String usuario = "";
-		if (mensagem.startsWith("@")) {
-			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, 1);
-		}
-		return usuario;
-	}
+	private String montaMensagem(String mensagem){
+		List<Usuario> usuarios = usuarioDao.list();
 
-	public String localizarUsuarioNoMeioDaMensagem(String mensagem) {
-		String usuario = "";
-		if (mensagem.contains("@")) {
-			int posicaoInicioUsuario = 0;
-			for (int i = 0; i < mensagem.length(); i++) {
-				if (mensagem.charAt(i) == '@') {
-					if (mensagem.charAt(i - 1) == ' ') {
-						posicaoInicioUsuario = i + 1;
-						break;
-					}
-					usuario += mensagem.charAt(i);
-				}
-			}
-
-			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, posicaoInicioUsuario);
+		for (Usuario usuario : usuarios) {
+			String loginUsuario = "@" + usuario.getLogin() + " ";
+			if(mensagem.contains(loginUsuario))
+				mensagem = mensagem.replace(loginUsuario, "<a href='link/" + usuario.getId() + "'>" + loginUsuario+ "</a>");
 		}
-		return usuario;
-	}
-
-	private String verificarNomeUsuarioMensagem(String mensagem, String usuario, int posicaoInicioUsuario) {
-		for (int i = posicaoInicioUsuario; i < mensagem.length(); i++) {
-			if (mensagem.charAt(i) != ' ') {
-				usuario += mensagem.charAt(i);
-			} else {
-				break;
-			}
-		}
-		return usuario;
+		
+		return mensagem;
 	}
 	
-	public String retornarMensagemComLink(String mensagemSemLink) {
-
-		String mensagemComLink = "";
-
-		for (int i = 0; i < mensagemSemLink.length(); i++) {
-			if (mensagemSemLink.charAt(i) == '@') {
-				if (i == 0) {
-					String usuario = "";
-					for (int j = i + 1; j < mensagemSemLink.length(); j++) {
-						if (mensagemSemLink.charAt(j) != ' ') {
-							usuario += mensagemSemLink.charAt(j);
-						} else {
-							break;
-						}
-					}
-					i = i + usuario.length() + 1;
-					if (usuarioDao.isLoginExiste(usuario) == true) {
-						mensagemComLink = "<a href='link/11'>@" + usuario
-								+ "</a>";
-					} else {
-						mensagemComLink = "@" + usuario + " ";
-					}
-				} else {
-					//blabla ronaldo!
-				}
-			} else {
-				mensagemComLink += mensagemSemLink.charAt(i);
-			}
-		}
-
-		return mensagemComLink;
-	}
+	
+//	public String localizarUsuarioNoInicioDaMensagem(String mensagem) {
+//		String usuario = "";
+//		if (mensagem.startsWith("@")) {
+//			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, 1);
+//		}
+//		return usuario;
+//	}
+//
+//	public String localizarUsuarioNoMeioDaMensagem(String mensagem) {
+//		String usuario = "";
+//		if (mensagem.contains("@")) {
+//			int posicaoInicioUsuario = 0;
+//			for (int i = 0; i < mensagem.length(); i++) {
+//				if (mensagem.charAt(i) == '@') {
+//					if (mensagem.charAt(i - 1) == ' ') {
+//						posicaoInicioUsuario = i + 1;
+//						break;
+//					}
+//					usuario += mensagem.charAt(i);
+//				}
+//			}
+//
+//			usuario = verificarNomeUsuarioMensagem(mensagem, usuario, posicaoInicioUsuario);
+//		}
+//		return usuario;
+//	}
+//
+//	private String verificarNomeUsuarioMensagem(String mensagem, String usuario, int posicaoInicioUsuario) {
+//		for (int i = posicaoInicioUsuario; i < mensagem.length(); i++) {
+//			if (mensagem.charAt(i) != ' ') {
+//				usuario += mensagem.charAt(i);
+//			} else {
+//				break;
+//			}
+//		}
+//		return usuario;
+//	}
+//	
+//	public String retornarMensagemComLink(String mensagemSemLink) {
+//
+//		String mensagemComLink = "";
+//
+//		for (int i = 0; i < mensagemSemLink.length(); i++) {
+//			if (mensagemSemLink.charAt(i) == '@') {
+//				if (i == 0) {
+//					String usuario = "";
+//					for (int j = i + 1; j < mensagemSemLink.length(); j++) {
+//						if (mensagemSemLink.charAt(j) != ' ') {
+//							usuario += mensagemSemLink.charAt(j);
+//						} else {
+//							break;
+//						}
+//					}
+//					i = i + usuario.length() + 1;
+//					if (usuarioDao.isLoginExiste(usuario) == true) {
+//						mensagemComLink = "<a href='link/11'>@" + usuario+ "</a>";
+//					} else {
+//						mensagemComLink = "@" + usuario + " ";
+//					}
+//				} else {
+//					//blabla ronaldo!
+//				}
+//			} else {
+//				mensagemComLink += mensagemSemLink.charAt(i);
+//			}
+//		}
+//
+//		return mensagemComLink;
+//	}
 }
