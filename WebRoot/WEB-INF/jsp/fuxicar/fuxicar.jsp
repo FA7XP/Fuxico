@@ -5,10 +5,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<script src="${contextPath}/js/jquery/jquery-1.7.0.min.js"></script>
-		<script src="${contextPath}/js/jquery/jquery-ui-1.8.13.custom.min.js"></script>
-		<script src="${contextPath}/js/jquery/jquery.ui.datepicker-pt-BR.js"></script>
-		<script src="${contextPath}/js/jquery/jquery.validate.min.js"></script>
+		<script src="${contextPath}/js/jquery/jquery-1.7.0.min.js">
+</script>
+		<script src="${contextPath}/js/jquery/jquery-ui-1.8.13.custom.min.js">
+</script>
+		<script src="${contextPath}/js/jquery/jquery.ui.datepicker-pt-BR.js">
+</script>
+		<script src="${contextPath}/js/jquery/jquery.validate.min.js">
+</script>
 
 		<link rel="stylesheet" type="text/css" href="css/fuxico.css" />
 
@@ -132,9 +136,8 @@ td {
 													<tr>
 														<td>
 															<p align="center">
-																<a href='link/${usuario.id}'>
-																	<img src="imagens/usuario.jpg" />
-																</a>
+																<a href='link/${usuario.id}'> <img
+																		src="imagens/usuario.jpg" /> </a>
 															</p>
 														</td>
 														<td>
@@ -146,7 +149,7 @@ td {
 																</tr>
 																<tr>
 																	<td>
-																	<a href='link/${usuario.id}'>@${usuario.login}</a>
+																		<a href='link/${usuario.id}'>@${usuario.login}</a>
 																	</td>
 																</tr>
 																<tr>
@@ -176,7 +179,8 @@ td {
 										</tr>
 										<tr>
 											<td valign="top">
-												<div style="width: 100%; height: 365px; z-index: 1; overflow-y: scroll;">
+												<div
+													style="width: 100%; height: 365px; z-index: 1; overflow-y: scroll;">
 													<table border="0" height="170px" width="100%">
 														<tr>
 															<td>
@@ -290,7 +294,8 @@ td {
 							</c:if>
 							<tr>
 								<td>
-									<table class="estilotabela" width="100%" cellpadding="2" cellspacing="2">
+									<table class="estilotabela" width="100%" cellpadding="2"
+										cellspacing="2">
 										<tr>
 											<td class="estilotitulo">
 												<p align="center">
@@ -302,27 +307,40 @@ td {
 											<td>
 												<div id="Fuxicos"
 													style="width: 100%; height: 460px; z-index: 1; overflow-y: scroll;">
-													<table border="0" height="20px" width="100%">
-														<tr>
-															<td>
-																<div id="mensagens">
-																	<table class="defaultArgsTable table-striped" border="0" height="20px" width="100%">
-																		<c:forEach items="${fuxicos}" var="fuxico">
-																			<tr fuxicoid='fuxico.id'>
-																				<td width="50px">
-																					<p align="center"><img style="width: 40px;" src="imagens/usuario4.jpg" /></p>
-																				</td>
-																				<td>
-																					<span class='nomeInfo'>${fuxico.usuario.nome}: ${fuxico.fuxico}</span>
-																				</td>
-																			</tr>
-																		</c:forEach>
+													<!-- <div id="mensagens">  -->
+
+													<!-- <table class="defaultArgsTable table-striped" border="0" height="20px" width="100%">  -->
+													<c:forEach items="${fuxicos}" var="fuxico">
+														<table border="0" height="20px" width="100%">
+															<tr fuxicoid='fuxico.id'>
+																<td width="50px">
+																	<p align="center">
+																		<img style="width: 40px;" src="imagens/usuario4.jpg" />
+																	</p>
+																</td>
+																<td>
+																	<table border="0" valign="top">
+																		<tr>
+																			<td colspan="2">
+																				${fuxico.dataFormatada}
+																			</td>
+																		</tr>
+																		<tr>
+
+																			<td>
+																				<span class='nomeInfo'>
+																					@${fuxico.usuario.login}: ${fuxico.fuxico} </span>
+																			</td>
+																		</tr>
 																	</table>
-																</div>
-															</td>
-														</tr>
-													</table>
+																</td>
+															</tr>
+														</table>
+													</c:forEach>
+													<!-- </table>  -->
 												</div>
+
+												<!-- </div>   -->
 											</td>
 										</tr>
 									</table>
@@ -334,25 +352,38 @@ td {
 			</table>
 		</div>
 		<script type="text/javascript">
-			$(function() {
-				window.setInterval("listar()", 10000);
+$(function() {
+	window.setInterval("listar()", 10000);
+});
+function listar() {
+	var url = "/fuxico/fuxicos/${usuario.id}";
+	$
+			.ajax( {
+				url : url,
+				type : "GET",
+				cache : false,
+				success : function(retorno) {
+					var fuxicos = retorno.fuxicos;
+					$("#mensagens table").html("");
+					$(fuxicos)
+							.each(
+									function(i, fuxico) {
+										$("#mensagens table")
+												.prepend(
+														"<tr fuxicoid='"
+																+ fuxico.id
+																+ "'><td width='50px'><p align='center'><img style='width: 40px;' src='imagens/usuario4.jpg' /></p></td>"
+																+ "<td><span class='nomeInfo'>"
+																+ fuxico.usuario.nome
+																+ ": </span>"
+																+ fuxico.fuxico
+																+ "</td></tr>");
+									});
+				},
+				error : function() {
+				}
 			});
-			function listar() {
-				var url = "/fuxico/fuxicos/${usuario.id}";
-				$.ajax({
-					url : url,
-					type : "GET",
-					cache : false,
-					success : function( retorno ) {
-						var fuxicos = retorno.fuxicos;
-						$("#mensagens table").html("");
-						$(fuxicos).each(function(i, fuxico) {
-							$("#mensagens table").prepend("<tr fuxicoid='"+ fuxico.id +"'><td width='50px'><p align='center'><img style='width: 40px;' src='imagens/usuario4.jpg' /></p></td>" + "<td><span class='nomeInfo'>"+ fuxico.usuario.nome +": </span>"+ fuxico.fuxico +"</td></tr>");
-						});
-					},
-					error : function (){}
-				});
-			}
-		</script>
+}
+</script>
 	</body>
 </html>

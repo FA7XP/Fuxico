@@ -1,5 +1,6 @@
 package br.com.fa7.fuxico.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @SequenceGenerator(name="sequence", sequenceName="fuxico_sequence", allocationSize=1)
-public class Fuxico {
+public class Fuxico implements Cloneable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -49,6 +50,10 @@ public class Fuxico {
 	public Date getData() {
 		return data;
 	}
+	
+	public String getDataFormatada() {
+		return  new SimpleDateFormat("MM/yy hh:mm:ss").format(data);
+	}
 
 	public void setData(Date data) {
 		this.data = data;
@@ -60,5 +65,14 @@ public class Fuxico {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Fuxico clone() {
+		try {
+			return (Fuxico) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

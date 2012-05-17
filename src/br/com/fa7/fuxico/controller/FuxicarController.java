@@ -68,10 +68,20 @@ public class FuxicarController {
 			usuario = usuarioDao.load(usuario.getId());
 			
 			Fuxico fuxico = new Fuxico();
-			fuxico.setUsuario(usuario);
 			fuxico.setFuxico(montaMensagem(mensagem));
 			fuxico.setData(new Date());
+			fuxico.setUsuario(usuario);
 			fuxicoDao.save(fuxico);
+			
+			List<Usuario> usuarios = usuarioDao.list();
+			for (Usuario usu : usuarios) {
+				String loginUsuario = "@" + usuario.getLogin() + " ";
+				if(mensagem.contains(loginUsuario))	{
+					Fuxico fuxicoClone = fuxico.clone();
+					fuxicoClone.setUsuario(usu);
+					fuxicoDao.save(fuxicoClone);
+				}
+			}
 
 			result.redirectTo(this).fuxicar(usuario, true);
 		}
@@ -83,7 +93,7 @@ public class FuxicarController {
 		for (Usuario usuario : usuarios) {
 			String loginUsuario = "@" + usuario.getLogin() + " ";
 			if(mensagem.contains(loginUsuario))
-				mensagem = mensagem.replace(loginUsuario, "<a href='link/" + usuario.getId() + "'>" + loginUsuario+ "</a>");
+				mensagem = mensagem.replace(loginUsuario, "<a href='link/" + usuario.getId() + "'>" + loginUsuario.trim()+ "</a>");
 		}
 		
 		return mensagem;
