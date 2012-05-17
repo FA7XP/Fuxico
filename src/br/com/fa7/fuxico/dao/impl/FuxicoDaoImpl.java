@@ -23,7 +23,7 @@ public class FuxicoDaoImpl extends GenericDaoImpl implements FuxicoDao {
 	public List<Fuxico> listaFuxicosByUsuario(Long usuarioId) {
 		Criteria criteria = getSession().createCriteria(Fuxico.class, "f");
 		criteria.add(Restrictions.eq("f.usuario.id", usuarioId));
-		criteria.addOrder(Order.desc("f.id"));
+		criteria.addOrder(Order.asc("f.data"));
 
 		return criteria.list();
 	}

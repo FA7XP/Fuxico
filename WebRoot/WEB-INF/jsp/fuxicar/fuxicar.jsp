@@ -305,42 +305,8 @@ td {
 										</tr>
 										<tr>
 											<td>
-												<div id="Fuxicos"
-													style="width: 100%; height: 460px; z-index: 1; overflow-y: scroll;">
-													<!-- <div id="mensagens">  -->
-
-													<!-- <table class="defaultArgsTable table-striped" border="0" height="20px" width="100%">  -->
-													<c:forEach items="${fuxicos}" var="fuxico">
-														<table border="0" height="20px" width="100%">
-															<tr fuxicoid='fuxico.id'>
-																<td width="50px">
-																	<p align="center">
-																		<img style="width: 40px;" src="imagens/usuario4.jpg" />
-																	</p>
-																</td>
-																<td>
-																	<table border="0" valign="top">
-																		<tr>
-																			<td colspan="2">
-																				${fuxico.dataFormatada}
-																			</td>
-																		</tr>
-																		<tr>
-
-																			<td>
-																				<span class='nomeInfo'>
-																					@${fuxico.usuario.login}: ${fuxico.fuxico} </span>
-																			</td>
-																		</tr>
-																	</table>
-																</td>
-															</tr>
-														</table>
-													</c:forEach>
-													<!-- </table>  -->
-												</div>
-
-												<!-- </div>   -->
+												<div id="Fuxicos" style="width: 100%; height: 460px; z-index: 1; overflow-y: scroll;">
+												</div>   
 											</td>
 										</tr>
 									</table>
@@ -354,6 +320,7 @@ td {
 		<script type="text/javascript">
 $(function() {
 	window.setInterval("listar()", 10000);
+	listar();
 });
 function listar() {
 	var url = "/fuxico/fuxicos/${usuario.id}";
@@ -364,20 +331,38 @@ function listar() {
 				cache : false,
 				success : function(retorno) {
 					var fuxicos = retorno.fuxicos;
-					$("#mensagens table").html("");
+					$("#Fuxicos").html("");
 					$(fuxicos)
 							.each(
 									function(i, fuxico) {
-										$("#mensagens table")
+										$("#Fuxicos")
 												.prepend(
-														"<tr fuxicoid='"
-																+ fuxico.id
-																+ "'><td width='50px'><p align='center'><img style='width: 40px;' src='imagens/usuario4.jpg' /></p></td>"
-																+ "<td><span class='nomeInfo'>"
-																+ fuxico.usuario.nome
-																+ ": </span>"
-																+ fuxico.fuxico
-																+ "</td></tr>");
+														"<table border='0' height='20px' width='100%'>" +
+																"<tr fuxicoid='"+ fuxico.id + "'>"+
+																"<td width='50px'>"+
+																	"<p align='center'>"+
+																		"<img style='width: 40px;' src='imagens/usuario4.jpg' />"+
+																	"</p>"+
+																"</td>"+
+																"<td>"+
+																	"<table border='0' valign='top'>"+
+																		"<tr>"+
+																			"<td colspan='2'>"+
+																				fuxico.dataFormatada +
+																			"</td>"+
+																		"</tr>"+
+																		"<tr>"+
+
+																			"<td>"+
+																				"<span class='nomeInfo'>"+
+																					fuxico.fuxico+ "</span>"+
+																			"</td>"+
+																		"</tr>"+
+																	"</table>"+
+																"</td>"+
+															"</tr>" +
+															"</table>");
+															
 									});
 				},
 				error : function() {

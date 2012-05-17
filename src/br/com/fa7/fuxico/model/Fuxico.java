@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,6 +31,13 @@ public class Fuxico implements Cloneable {
 	@NotNull  
 	private Date data;
 	
+	@Transient
+	private String dataFormatada;
+	
+	public void setDataFormatada(String dataFormatada) {
+		this.dataFormatada = new SimpleDateFormat("MM/yy hh:mm:ss").format(new Date());
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -46,13 +54,12 @@ public class Fuxico implements Cloneable {
 		this.fuxico = fuxico;
 	}
 
-
-	public Date getData() {
-		return data;
+	public String getData() {
+		return new SimpleDateFormat("MM/yy hh:mm:ss").format(data);
 	}
 	
 	public String getDataFormatada() {
-		return  new SimpleDateFormat("MM/yy hh:mm:ss").format(data);
+		return this.dataFormatada;
 	}
 
 	public void setData(Date data) {
