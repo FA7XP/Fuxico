@@ -45,7 +45,7 @@ public class FuxicarController {
 	public void fuxicos(Usuario usuario) {
 		if(usuario != null && usuario.getId() != null){
 			Collection<Fuxico> fuxicos = fuxicoDao.listaFuxicosByUsuario(usuario.getId());
-			result.use(json()).from(fuxicos, "fuxicos").include("usuario").include("data").serialize();
+			result.use(json()).from(fuxicos, "fuxicos").include("usuario").serialize();
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class FuxicarController {
 		if (mensagem == null || mensagem.isEmpty()) {
 			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			result.include("erroMensagem", "Digite uma mensagem com até 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com atï¿½ 255 caracteres!");
 		} else {
 			usuario = usuarioDao.load(usuario.getId());
 			

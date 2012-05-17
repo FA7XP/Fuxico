@@ -137,7 +137,7 @@ td {
 														<td>
 															<p align="center">
 																<a href='link/${usuario.id}'> <img
-																		src="imagens/usuario.jpg" /> </a>
+																		src="imagens/anonimo.jpg" /> </a>
 															</p>
 														</td>
 														<td>
@@ -188,7 +188,7 @@ td {
 																	<tr>
 																		<td width="50px">
 																			<p align="center">
-																				<img style="width: 40px;" src="imagens/usuario2.jpg" />
+																				<img style="width: 40px;" src="imagens/anonimo.jpg" />
 																			</p>
 																		</td>
 																		<td>
@@ -212,7 +212,7 @@ td {
 																	<tr>
 																		<td width="50px">
 																			<p align="center">
-																				<img style="width: 40px;" src="imagens/usuario3.jpg" />
+																				<img style="width: 40px;" src="imagens/anonimo.jpg" />
 																			</p>
 																		</td>
 																		<td>
@@ -236,7 +236,7 @@ td {
 																	<tr>
 																		<td width="50px">
 																			<p align="center">
-																				<img style="width: 40px;" src="imagens/usuario4.jpg" />
+																				<img style="width: 40px;" src="imagens/anonimo.jpg" />
 																			</p>
 																		</td>
 																		<td>
@@ -341,14 +341,14 @@ function listar() {
 																"<tr fuxicoid='"+ fuxico.id + "'>"+
 																"<td width='50px'>"+
 																	"<p align='center'>"+
-																		"<img style='width: 40px;' src='imagens/usuario4.jpg' />"+
+																		"<img style='width: 40px;' src='imagens/anonimo.jpg' />"+
 																	"</p>"+
 																"</td>"+
 																"<td>"+
 																	"<table border='0' valign='top'>"+
 																		"<tr>"+
 																			"<td colspan='2'>"+
-																				fuxico.dataFormatada +
+																				fuxico.data +
 																			"</td>"+
 																		"</tr>"+
 																		"<tr>"+

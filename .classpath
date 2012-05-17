@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/OpenId/nekohtml-1.9.14.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/OpenId/openid4java-0.9.6.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/OpenId/xercesImpl-2.8.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/OpenId/xstream-1.4.2.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
