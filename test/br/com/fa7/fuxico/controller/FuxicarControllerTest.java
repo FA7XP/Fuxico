@@ -1,6 +1,6 @@
 package br.com.fa7.fuxico.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.fa7.fuxico.dao.FuxicoDao;
 import br.com.fa7.fuxico.dao.UsuarioDao;
 import br.com.fa7.fuxico.dao.UsuarioSession;
-import br.com.fa7.fuxico.model.Fuxico;
 import br.com.fa7.fuxico.model.Usuario;
 
 public class FuxicarControllerTest {
@@ -63,7 +62,7 @@ public class FuxicarControllerTest {
 		String msgRetorno = (String) resultMock.included().get("erroMensagem");
 
 		assertEquals(1, resultMock.included().size());
-		assertEquals("Digite uma mensagem com até 255 caracteres!", msgRetorno);
+		assertEquals("Digite uma mensagem com atï¿½ 255 caracteres!", msgRetorno);
 
 	}
 
@@ -95,15 +94,16 @@ public class FuxicarControllerTest {
 		
 		when(usuarioDaoMock.list()).thenReturn(usuarios);
 
-		String msgRetorno = fuxicarController.montaMensagem(mensagem);
+		String msgRetorno = fuxicarController.montaMensagem(mensagem, felipe.getLogin());
 		
-		assertEquals("Ola <a href='link/9999'>@luiz </a>como vai", msgRetorno);
+		assertEquals("@felipe: Ola <a href='link/9999'>@luiz</a> como vai", msgRetorno);
 	}
 
 	@Test()
 	public void mensagemEnviada() {
 		iniciaUsuario();
 
+		when(usuarioDaoMock.load(usuario.getId())).thenReturn(usuario);
 		fuxicarController.fuxicar("fuxicando", usuario);
 		assertEquals(0, resultMock.included().size());
 	}
@@ -112,14 +112,17 @@ public class FuxicarControllerTest {
 	public void mensagemEnviadaParaOutroUsuario() {
 		usuario = new Usuario();
 		usuario.setNome("Marilia");
+		usuario.setLogin("Marilia");
 
+		when(usuarioDaoMock.load(usuario.getId())).thenReturn(usuario);
 		fuxicarController.fuxicar("fuxicando", usuario);
 		assertEquals(0, resultMock.included().size());
 	}
 
-
 	private void iniciaUsuario() {
 		usuario = new Usuario();
+		usuario.setLogin("felipe");
 		usuario.setNome("Felipe");
+		usuario.setSenha("felipe123");
 	}
 }

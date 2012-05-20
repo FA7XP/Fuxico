@@ -21,7 +21,6 @@ import org.openid4java.message.ax.FetchResponse;
 public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	final static String GOOGLE = "http://www.google.com/accounts/o8/id";
 	private ConsumerManager consumerManager;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -42,7 +41,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 		try {
 			VerificationResult verification = consumerManager.verify(receivingURL.toString(), response, discovered);
-			verification.getStatusMsg();
+			
 			
 			if (verification.getVerifiedId() != null) {
 				AuthSuccess authSuccess = (AuthSuccess) verification.getAuthResponse();
@@ -52,7 +51,10 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
 					String email = (String) fetchResp.getAttributeValues("email").get(0);
 					String firstName = (String) fetchResp.getAttributeValues("firstName").get(0);
-					httpResp.sendRedirect("../fuxicar");
+					String lastName = (String) fetchResp.getAttributeValues("lastName").get(0);
+					String nome = firstName + " " + lastName;  
+					String senha = verification.getVerifiedId().toString();
+					httpResp.sendRedirect("../google/" + firstName + "/" + senha.replace("https://www.google.com/accounts/o8/id?id=", "") + "/" + nome + "/" + email);
 				}else
 					System.out.println("Login Falhou.");
 			}
@@ -72,7 +74,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 			AuthRequest authReq = consumerManager.authenticate(discovered, returnToUrl);
 
 			FetchRequest fetch = FetchRequest.createFetchRequest();
-			if (identifier.startsWith(GOOGLE)) {
+			if (identifier.startsWith("http://www.google.com/accounts/o8/id")) {
 				fetch.addAttribute("email",	"http://axschema.org/contact/email", true);
 				fetch.addAttribute("firstName",	"http://axschema.org/namePerson/first", true);
 				fetch.addAttribute("lastName", "http://axschema.org/namePerson/last", true);

@@ -34,13 +34,16 @@ public class FuxicarController {
 	@Get("/fuxicar")
 	public void fuxicar(Usuario usuario, boolean exibirFuxicar) {
 
-		if(usuario == null)
+		if(usuario == null)	{
 			usuario = usuarioSession.getUsuario();
+			exibirFuxicar = true;
+		}
 		
 		List<Fuxico> fuxicos = fuxicoDao.listaFuxicosByUsuario(usuario.getId());
-		result.include("fuxicos", fuxicos).include("usuario", usuario).include("exibirFuxicar", exibirFuxicar);
+		List<Usuario> fuxiqueiros = usuarioDao.list();
+		result.include("fuxiqueiros", fuxiqueiros).include("fuxicos", fuxicos).include("usuario", usuario).include("exibirFuxicar", exibirFuxicar);
 	}
-
+	
 	@Get("/fuxicos/{usuario.id}")
 	public void fuxicos(Usuario usuario) {
 		if(usuario != null && usuario.getId() != null){
@@ -68,35 +71,40 @@ public class FuxicarController {
 			usuario = usuarioDao.load(usuario.getId());
 			
 			Fuxico fuxico = new Fuxico();
-			fuxico.setFuxico("@" + usuario.getLogin() + ": "+ montaMensagem(mensagem));
+			fuxico.setFuxico(montaMensagem(mensagem, usuario.getLogin()));
 			fuxico.setData(new Date());
 			fuxico.setUsuario(usuario);
 			fuxicoDao.save(fuxico);
 			
-			String loginUsuarioLogado = "@" + usuario.getLogin() + " ";
-			List<Usuario> usuarios = usuarioDao.list();
-			for (Usuario usu : usuarios) {
-				String loginUsuario = "@" + usu.getLogin() + " ";
-				if(mensagem.contains(loginUsuario) && !mensagem.contains(loginUsuarioLogado))	{
-					Fuxico fuxicoClone = fuxico.clone();
-					fuxicoClone.setUsuario(usu);
-					fuxicoDao.save(fuxicoClone);
-				}
-			}
-
+			distribuirMensagemFuxiqueiro(mensagem, usuario, fuxico);
 			result.redirectTo(this).fuxicar(usuario, true);
 		}
 	}
 
-	public String montaMensagem(String mensagem){
+	public String montaMensagem(String mensagem, String loginUsuarioDestinatario) {
+		String destinatario = "@" + loginUsuarioDestinatario + ": ";
+		
 		List<Usuario> usuarios = usuarioDao.list();
 
-		for (Usuario usuario : usuarios) {
-			String loginUsuario = "@" + usuario.getLogin() + " ";
+		for (Usuario usu : usuarios) {
+			String loginUsuario = "@" + usu.getLogin() + " ";
 			if(mensagem.contains(loginUsuario))
-				mensagem = mensagem.replace(loginUsuario, "<a href='link/" + usuario.getId() + "'>" + loginUsuario.trim()+ "</a> ");
+				mensagem = mensagem.replace(loginUsuario, "<a href='link/" + usu.getId() + "'>" + loginUsuario.trim()+ "</a> ");
 		}
 		
-		return mensagem;
+		return destinatario + mensagem;
+	}
+
+	private void distribuirMensagemFuxiqueiro(String mensagem, Usuario usuario,	Fuxico fuxico) {
+		String loginUsuarioLogado = "@" + usuario.getLogin() + " ";
+		List<Usuario> usuarios = usuarioDao.list();
+		for (Usuario usu : usuarios) {
+			String loginUsuario = "@" + usu.getLogin() + " ";
+			if(mensagem.contains(loginUsuario) && !mensagem.contains(loginUsuarioLogado))	{
+				Fuxico fuxicoClone = fuxico.clone();
+				fuxicoClone.setUsuario(usu);
+				fuxicoDao.save(fuxicoClone);
+			}
+		}
 	}
 }

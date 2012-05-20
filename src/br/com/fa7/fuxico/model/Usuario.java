@@ -23,7 +23,7 @@ public class Usuario implements Cloneable {
 	@NotNull @Size(max = 32)
 	private String login;
 	
-	@NotNull @Size(max = 32)
+	@NotNull @Size(max = 100)
 	private String senha;
 	
 	@Size(max = 64) 
