@@ -13,6 +13,7 @@
 		<script src="${contextPath}/js/jquery/jquery.validate.min.js"></script>
 		<script src="${contextPath}/js/md5.js"></script>
 
+		<link rel="stylesheet" type="text/css" href="css/login.css" />
 		
 		<script>
 			$(function() {
@@ -89,8 +90,8 @@
 			}
 			
 			#principal {
-				width: 900px;
-				height: 460px;
+				width: 910px;
+				height: 480px;
 				margin: 8px auto;
 				border: 1px solid #000000;
 				z-index: 1;
@@ -164,6 +165,10 @@
 			<img alt="Fuxico" src="imagens/logo.png" />
 		</div>
 
+		<p align="center" style="color: Red;">
+			${excluir}
+		</p>
+
 		<div id="principal">
 			<table border="0" style="height: 50px; width: 100%;">
 				<tr>
@@ -187,7 +192,7 @@
 														<tr>
 															<td colspan="2">
 																<div id="erro">
-																	<p align="center" style="color: Red;">
+																	<p align="left" style="color: Red;">
 																		${erro}
 																	</p>
 																</div>
@@ -198,7 +203,7 @@
 																<p align="right">Usuário:&nbsp;</p>
 															</td>
 															<td>
-																<input type="text" maxlength="32" name="login" id="usuarioLogin">
+																<input type="text" maxlength="32" name="login" id="usuarioLogin" value=${login}>
 															</td>
 														</tr>
 														<tr>
@@ -274,8 +279,7 @@
 																</p>
 															</td>
 															<td>
-																<input class="nome" type="text" maxlength="255"
-																	name="usuario.nome">
+																<input class="nome" type="text" maxlength="255"	name="usuario.nome" value=${usuario.nome} >
 															</td>
 														</tr>
 														<tr>
@@ -285,8 +289,7 @@
 																</p>
 															</td>
 															<td>
-																<input type="text" class="campo" maxlength="32"
-																	name="usuario.login">
+																<input type="text" class="campo" maxlength="32"	name="usuario.login" value=${usuario.login}>
 															</td>
 														</tr>
 														<tr>
@@ -316,8 +319,7 @@
 																</p>
 															</td>
 															<td>
-																<input class="email" type="text" maxlength="64"
-																	name="usuario.email">
+																<input class="email" type="text" maxlength="64"	name="usuario.email" value=${usuario.email}>
 															</td>
 														</tr>
 														<tr>

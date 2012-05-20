@@ -6,10 +6,12 @@
 	<head>
 		<script src="${contextPath}/js/jquery/jquery-1.7.0.min.js"></script>
 		<script src="${contextPath}/js/jquery/jquery-ui-1.8.13.custom.min.js"></script>
+		<script src="${contextPath}/js/jquery/jquery.alerts.js"></script>
 		<script src="${contextPath}/js/jquery/jquery.ui.datepicker-pt-BR.js"></script>
 		<script src="${contextPath}/js/jquery/jquery.validate.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="css/fuxico.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.alerts.css" />
 
 		<title>Fuxico</title>
 		<style type="text/css" media="screen">
@@ -21,7 +23,7 @@
 			}
 			
 			#principal {
-				width: 800px;
+				width: 600px;
 				height: 610px;
 				margin: 0px auto;
 				border: 0px solid #000000;
@@ -87,12 +89,22 @@
 		<div id="principal">
 		
 			<table border="0" style="width: 100%; height: 100%;">
-				<tr>
-					<td align="right">
-						Voltar
-					</td>
-				</tr>
-				
+					<tr>
+						<td></td>
+						<td align="right">
+							<c:choose>
+						      <c:when test="${exibirFuxicar}">
+								<a href="#" onclick="newConfirm('Confirma exclusão?', function(){window.location='fuxicar/excluir/${usuario.id}'});">Excluir Conta</a>
+						      </c:when>
+						      <c:otherwise>
+								<a class="btn" href="<c:url value='/fuxicar'/>">Voltar</a>
+						      </c:otherwise>
+						    </c:choose>
+							&nbsp;&nbsp;&nbsp;  
+							<a class="btn" href="<c:url value='/fuxicar/sair'/>">sair</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+						</td>
+					</tr>
 				<tr>
 					<td style="width: 200px;">
 						<table border="0" style="width: 100%; height: 100%;">
@@ -143,8 +155,7 @@
 							</tr>
 							<tr>
 								<td>
-									<table class="estilotabela" width="100%" height="100%"
-										cellpadding="2" cellspacing="2" border="0">
+									<table class="estilotabela" width="100%" height="100%"	cellpadding="2" cellspacing="2" border="0">
 										<tr>
 											<td class="estilotitulo">
 												<p align="center">
@@ -199,11 +210,11 @@
 							<c:if test="${exibirFuxicar}">
 								<tr>
 									<td style="height: 100px;">
-										<form id="formLogin" method="post"	action="<c:url value='/fuxicar/${usuario.id}'/>">
+										<form id="formFuxicar" method="post"	action="<c:url value='/fuxicar/${usuario.id}'/>">
 											<table border="0" style="width: 50px;">
 												<tr>
 													<td>
-														<textarea name="mensagem" cols="44" rows=3></textarea>
+														<textarea id="mensagem" name="mensagem" cols="44" rows=3></textarea>
 													</td>
 												</tr>
 												<tr>
@@ -220,7 +231,7 @@
 							</c:if>
 							<tr>
 								<td>
-									<table class="estilotabela" width="75%" height="100%" cellpadding="2">
+									<table class="estilotabela" width="380px" height="100%" cellpadding="2">
 										<tr>
 											<td class="estilotitulo">
 												<p align="center">
@@ -246,7 +257,21 @@
 			$(function() {
 				window.setInterval("listar()", 10000);
 				listar();
+				
+				$("#formFuxicar").validate( {
+					rules : {
+						"mensagem" : {
+							required : true
+						}
+					},
+					messages : {
+						"mensagem" : {
+							required : "Digite um fuxico."
+						}
+					}
+				});
 			});
+			
 			function listar() {
 				var url = "/fuxico/fuxicos/${usuario.id}";
 				$

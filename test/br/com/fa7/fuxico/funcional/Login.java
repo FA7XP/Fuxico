@@ -6,18 +6,18 @@ public class Login extends FuxicoGenericSelenium{
 	
 	@Test
 	public void logar() throws Exception	{
-		checarTextoNaoPresente("Digite o nome.");
-		checarTextoNaoPresente("Digite a senha.");
+		checarTextoNaoPresente("Digite o Usuário.");
+		checarTextoNaoPresente("Digite o Usuário.");
 
 		clicarNoBotao("logar");
-		checarTextoPresente("Digite o nome.");
-		checarTextoPresente("Digite a senha.");
+		checarTextoPresente("Digite o Usuário.");
+		checarTextoPresente("Digite a Senha.");
 
-		checarTextoNaoPresente("Login ou senha inv�lidos.");
+		checarTextoNaoPresente("Login ou senha inválido.");
 		preencherCampoComTexto("login", "Samuel");
 		preencherCampoComTexto("senha", "Samuel");
 		clicarNoBotao("logar");
 		
-		checarTextoPresente("Login ou senha inv�lidos.");
+		checarTextoPresente("Login ou senha inválido.");
 	}
 }

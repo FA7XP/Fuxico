@@ -107,4 +107,22 @@ public class FuxicarController {
 			}
 		}
 	}
+	
+	@Get("/fuxicar/sair")
+	public void sair() throws Exception {
+		usuarioSession.setUsuario(null);
+		result.redirectTo(LoginController.class).logout();
+	}
+	
+	@Get("fuxicar/excluir/{usuarioId}")
+	public void excluir(Long usuarioId) throws Exception {
+		usuarioSession.setUsuario(null);
+		Usuario usuDel = usuarioDao.load(usuarioId);
+
+		List<Fuxico> fuxicosByUsuario = fuxicoDao.listaFuxicosByUsuario(usuarioId);
+		for (Fuxico fuxico : fuxicosByUsuario) {
+			fuxicoDao.delete(fuxico);
+		}
+		result.redirectTo(ContaController.class).excluir(usuDel);
+	}
 }

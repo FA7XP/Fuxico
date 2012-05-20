@@ -41,10 +41,10 @@ public class ContaControllerTest {
 
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 
-		contaController.gravarConta(usuario);
+		contaController.gravarConta(usuario, usuario.getSenha());
 		String msgRetorno = (String) resultMock.included().get("ok");
 		
-		assertEquals(1, resultMock.included().size());
+		assertEquals(2, resultMock.included().size());
 		assertEquals("Conta do FUXIQUEIRO criada com sucesso.", msgRetorno);
 	}
 	
@@ -57,11 +57,11 @@ public class ContaControllerTest {
 		usuario.setSenha("123456");
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(true);
-		contaController.gravarConta(usuario);
+		contaController.gravarConta(usuario, usuario.getSenha());
 		
 		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
-		assertEquals(1, resultMock.included().size());
+		assertEquals(2, resultMock.included().size());
 		assertEquals("Login já existente. Favor inserir um novo login.", msgRetorno);
 	}
 	
@@ -74,11 +74,11 @@ public class ContaControllerTest {
 		usuario.setSenha("victor");
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
-		contaController.gravarConta(usuario);
+		contaController.gravarConta(usuario, usuario.getSenha());
 		
 		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
-		assertEquals(1, resultMock.included().size());
+		assertEquals(2, resultMock.included().size());
 		assertEquals("A Senha não pode ser igual ao login.", msgRetorno);
 	}
 	
@@ -92,10 +92,10 @@ public class ContaControllerTest {
 		
 		when(usuarioDaoMock.isLoginExiste(usuario.getLogin())).thenReturn(false);
 		
-		contaController.gravarConta(usuario);
+		contaController.gravarConta(usuario, usuario.getSenha());
 		String msgRetorno = (String) resultMock.included().get("erroConta");
 		
-		assertEquals(1, resultMock.included().size());
+		assertEquals(2, resultMock.included().size());
 		assertEquals("A Senha não pode ser inferior a 6 caracteres.", msgRetorno);
 	}
 	

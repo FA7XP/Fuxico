@@ -70,7 +70,7 @@ public class LoginControllerTest {
 		
 		String msgRetorno = (String) resultMock.included().get("erro");
 
-		assertEquals(1, resultMock.included().size());
-		assertEquals("Login ou senha inv·lidos.", msgRetorno);
+		assertEquals(2, resultMock.included().size());
+		assertEquals("Login ou senha inv√°lido.", msgRetorno);
 	}
 }
