@@ -84,28 +84,4 @@ public class UsuarioDaoImpl extends GenericDaoImpl implements UsuarioDao {
 			throw new RuntimeException("Erro ao tentar efetuar Login");
 		}
 	}
-	
-	public Usuario getIdlogin(String login) {
-		try {
-			Criteria criteria = getSession().createCriteria(Usuario.class, "u");
-
-			ProjectionList p = Projections.projectionList().create();
-			p.add(Projections.property("u.id"), "id");
-			p.add(Projections.property("u.nome"), "nome");
-			p.add(Projections.property("u.login"), "login");
-			p.add(Projections.property("u.email"), "email");
-
-			criteria.setProjection(p);
-			criteria.add(Restrictions.eq("u.login", login));
-
-			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			criteria.setResultTransformer(new AliasToBeanResultTransformer(Usuario.class));
-
-			return (Usuario) criteria.uniqueResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Erro ao tentar efetuar Login");
-		}
-	}
-
 }

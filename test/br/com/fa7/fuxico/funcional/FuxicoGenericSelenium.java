@@ -36,7 +36,6 @@ public class FuxicoGenericSelenium {
 	}
 
 	protected void clicarNoBotao(String botao) {
-		
 		driver.findElement(By.xpath("//button[@id='" + botao + "']")).click();
 	}
 

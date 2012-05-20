@@ -1,9 +1,12 @@
 package br.com.fa7.fuxico.model;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,6 +28,9 @@ public class Usuario implements Cloneable {
 	
 	@NotNull @Size(max = 100)
 	private String senha;
+	
+	@OneToMany 
+	private Collection<Usuario> usuarios;
 	
 	@Size(max = 64) 
 	private String email;
@@ -77,5 +83,13 @@ public class Usuario implements Cloneable {
 			e.printStackTrace();
 		}
 		return usuario;
+	}
+
+	public Collection<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Collection<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 }

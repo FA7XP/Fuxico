@@ -66,7 +66,7 @@ public class FuxicarController {
 		if (mensagem == null || mensagem.isEmpty()) {
 			result.include("erroMensagem", "Digite uma mensagem!");
 		} else if (mensagem.length() > 255) {
-			result.include("erroMensagem", "Digite uma mensagem com at� 255 caracteres!");
+			result.include("erroMensagem", "Digite uma mensagem com até 255 caracteres!");
 		} else {
 			usuario = usuarioDao.load(usuario.getId());
 			
@@ -100,7 +100,7 @@ public class FuxicarController {
 		List<Usuario> usuarios = usuarioDao.list();
 		for (Usuario usu : usuarios) {
 			String loginUsuario = "@" + usu.getLogin() + " ";
-			if(mensagem.contains(loginUsuario) && !mensagem.contains(loginUsuarioLogado))	{
+			if(mensagem.contains(loginUsuario) && !mensagem.contains(loginUsuarioLogado)){
 				Fuxico fuxicoClone = fuxico.clone();
 				fuxicoClone.setUsuario(usu);
 				fuxicoDao.save(fuxicoClone);

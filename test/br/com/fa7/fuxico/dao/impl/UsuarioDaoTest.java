@@ -73,9 +73,4 @@ public class UsuarioDaoTest{
 		
 		assertEquals(usuario, usuarioDao.login(usuario.getLogin(), usuario.getSenha()));
 	}
-	
-	@Test
-	public void getIdlogin(){
-		assertEquals(new Long(4), (usuarioDao.getIdlogin("testes")).getId());
-	}
 }

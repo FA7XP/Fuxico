@@ -220,7 +220,7 @@
 												<tr>
 													<td>
 														<p align="right">
-															<input type="submit" value="Fuxicar">
+															<input type="submit" value="Fuxicar" id="fuxicar">
 														</p>
 													</td>
 												</tr>
