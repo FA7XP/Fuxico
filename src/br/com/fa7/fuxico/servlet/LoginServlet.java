@@ -42,7 +42,6 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 		try {
 			VerificationResult verification = consumerManager.verify(receivingURL.toString(), response, discovered);
 			
-			
 			if (verification.getVerifiedId() != null) {
 				AuthSuccess authSuccess = (AuthSuccess) verification.getAuthResponse();
 
